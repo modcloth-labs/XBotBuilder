@@ -16,8 +16,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
-        // Insert code here to initialize your application
-        XBot.foo()
+
+        let server = XBot.Server()
+        server.fetchDevices {
+            (devices) in
+            for device in devices {
+                println(device.name)
+            }
+        }
+
     }
 
     func applicationWillTerminate(aNotification: NSNotification?) {
