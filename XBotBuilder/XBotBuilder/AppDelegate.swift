@@ -18,6 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
 
         let server = XBot.Server()
+        
         server.fetchDevices {
             (devices) in
             for device in devices {
