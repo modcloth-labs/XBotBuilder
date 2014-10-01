@@ -30,6 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         server.fetchBots { (bots) in
             for bot in bots {
                 
+                /*
                 bot.fetchLatestIntegration{ (integration) in
                     
                     if let i = integration {
@@ -39,12 +40,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     }
                     
                 }
-                /*
-                bot.integrate { (success, integration) in
-                    println("\(bot.name) (\(bot.id)) integration started: \(success)")
-                }
                 */
-    
+                
+                bot.integrate { (success, integration) in
+                    
+                    let status = success ? "FAILED" : integration?.currentStep ?? "FAILED"
+                    
+                    println("\(bot.name) (\(bot.id)) integration - \(status)")
+                    
+                }
             }
         }
         
