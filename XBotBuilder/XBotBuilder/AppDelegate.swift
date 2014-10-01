@@ -19,36 +19,44 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let server = XBot.Server()
         
-        /*
-        server.fetchDevices { (devices) in
-            for device in devices {
-                println(device.name)
-            }
-        }
-        */
+//        server.fetchDevices { (devices) in
+//            for device in devices {
+//                println(device.description())
+//            }
+//        }
+        
+        
+        
+//        server.fetchBots { (bots) -> () in
+//            for bot in bots {
+//                bot.delete{ (success) in }
+//            }
+//        }
+        
 
+
+//        server.createBot("XBotBuilder go") { (success, bot) in
+//            println("\(bot?.name) (\(bot?.id)) created: \(success)")
+//        }
+        
+        
         server.fetchBots { (bots) in
             for bot in bots {
                 
-                /*
                 bot.fetchLatestIntegration{ (integration) in
                     
                     if let i = integration {
-                        println("\(bot.name) (\(bot.id)) - \(i.currentStep)")
+                        println("\(bot.name) (\(bot.id)) - \(i.currentStep) \(i.result)")
                     } else {
                         println("\(bot.name) (\(bot.id)) - No Integrations")
                     }
                     
                 }
-                */
-                
-                bot.integrate { (success, integration) in
-                    
-                    let status = success ? "FAILED" : integration?.currentStep ?? "FAILED"
-                    
-                    println("\(bot.name) (\(bot.id)) integration - \(status)")
-                    
-                }
+
+//                bot.integrate { (success, integration) in
+//                    let status = success ? integration?.currentStep ?? "NO INTEGRATION STEP" : "FAILED"
+//                    println("\(bot.name) (\(bot.id)) integration - \(status)")
+//                }
             }
         }
         
