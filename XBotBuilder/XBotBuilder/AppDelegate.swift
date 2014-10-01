@@ -19,13 +19,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let server = XBot.Server()
         
-        server.fetchDevices {
-            (devices) in
+        /*
+        server.fetchDevices { (devices) in
             for device in devices {
                 println(device.name)
             }
         }
+        */
 
+        server.fetchBots { (bots) in
+            for bot in bots {
+                bot.fetchLatestIntegration({ (integration) in
+                    
+                    if let i = integration {
+                        println("\(bot.name) (\(bot.id)) - \(i.currentStep)")
+                    } else {
+                        println("\(bot.name) (\(bot.id)) - No Integrations")
+                    }
+                    
+                })
+            }
+        }
+        
     }
 
     func applicationWillTerminate(aNotification: NSNotification?) {
