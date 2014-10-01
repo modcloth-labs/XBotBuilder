@@ -13,33 +13,27 @@ import XBot
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
+    
+    var server = XBot.Server()
 
 
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
 
-        let server = XBot.Server()
-        
-//        server.fetchDevices { (devices) in
-//            for device in devices {
-//                println(device.description())
-//            }
-//        }
-        
-        
-        
-//        server.fetchBots { (bots) -> () in
-//            for bot in bots {
-//                bot.delete{ (success) in }
-//            }
-//        }
-        
+        showStatus()
 
+//        createBot()
+        
+//        listDevices()
+        
+//        deleteAllBots()
+        
+    }
 
-//        server.createBot("XBotBuilder go") { (success, bot) in
-//            println("\(bot?.name) (\(bot?.id)) created: \(success)")
-//        }
-        
-        
+    func applicationWillTerminate(aNotification: NSNotification?) {
+        // Insert code here to tear down your application
+    }
+
+    func showStatus() {
         server.fetchBots { (bots) in
             for bot in bots {
                 
@@ -52,20 +46,48 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     }
                     
                 }
-
-//                bot.integrate { (success, integration) in
-//                    let status = success ? integration?.currentStep ?? "NO INTEGRATION STEP" : "FAILED"
-//                    println("\(bot.name) (\(bot.id)) integration - \(status)")
-//                }
             }
         }
+    }
+    
+    func listDevices() {
+        server.fetchDevices { (devices) in
+            for device in devices {
+                println(device.description())
+            }
+        }
+    }
+    
+    func deleteAllBots() {
+        server.fetchBots { (bots) -> () in
+            for bot in bots {
+                bot.delete{ (success) in }
+            }
+        }
+    }
+    
+    func createBot() {
         
+        let config = XBot.BotConfiguration(
+            name: "With Config",
+            projectOrWorkspace: "MCRotatingCarouselExample/MCRotatingCarouselExample.xcodeproj",
+            schemeName: "MCRotatingCarouselExample",
+            gitUrl: "git@github.com:modcloth-labs/MCRotatingCarousel.git",
+            branch: "master",
+            publicKey: publicKey,
+            privateKey: privateKey,
+            deviceIds: ["eb5383447a7bfedad16f6cd86300aaa2"])
+        
+        config.performsTestAction = true
+        
+        server.createBot(config) { (success, bot) in
+            println("\(bot?.name) (\(bot?.id)) created: \(success)")
+            bot?.integrate { (success, integration) in
+                let status = success ? integration?.currentStep ?? "NO INTEGRATION STEP" : "FAILED"
+                println("\(bot?.name) (\(bot?.id)) integration - \(status)")
+            }
+        }
     }
-
-    func applicationWillTerminate(aNotification: NSNotification?) {
-        // Insert code here to tear down your application
-    }
-
 
 }
 
