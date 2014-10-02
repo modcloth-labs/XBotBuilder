@@ -13,6 +13,16 @@ import XBot
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
+    @IBOutlet weak var botName: NSTextField!
+    @IBOutlet weak var botProjectName: NSTextField!
+    @IBOutlet weak var botSchemeName: NSTextField!
+    @IBOutlet weak var botGitUrl: NSTextField!
+    @IBOutlet weak var botBranch: NSTextField!
+    @IBOutlet weak var botPrivateKey: NSTextField!
+    @IBOutlet weak var botPublicKey: NSTextField!
+    @IBOutlet weak var botTestDeviceId: NSTextField!
+    @IBOutlet weak var githubAPIToken: NSTextField!
+
     
     var server = XBot.Server()
 
@@ -29,6 +39,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
     }
 
+    @IBAction func didClickBuild(sender: AnyObject) {
+        NSLog("Build the bot")
+        //        let config = XBot.BotConfiguration(
+        //            name: "With Config",
+        //            projectOrWorkspace: "MCRotatingCarouselExample/MCRotatingCarouselExample.xcodeproj",
+        //            schemeName: "MCRotatingCarouselExample",
+        //            gitUrl: "git@github.com:modcloth-labs/MCRotatingCarousel.git",
+        //            branch: "master",
+        //            publicKey: publicKey,
+        //            privateKey: privateKey,
+        //            deviceIds: ["eb5383447a7bfedad16f6cd86300aaa2"])
+        let config = XBot.BotConfiguration(
+            name: botName.stringValue,
+            projectOrWorkspace: botProjectName.stringValue,
+            schemeName: botSchemeName.stringValue,
+            gitUrl: botGitUrl.stringValue,
+            branch: botBranch.stringValue,
+            publicKey: botPublicKey.stringValue,
+            privateKey: botPrivateKey.stringValue,
+            deviceIds: [botTestDeviceId.stringValue])
+
+        println(config)
+        createBot(config)
+    }
+    
     func applicationWillTerminate(aNotification: NSNotification?) {
         // Insert code here to tear down your application
     }
@@ -66,18 +101,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    func createBot() {
-        
-        let config = XBot.BotConfiguration(
-            name: "With Config",
-            projectOrWorkspace: "MCRotatingCarouselExample/MCRotatingCarouselExample.xcodeproj",
-            schemeName: "MCRotatingCarouselExample",
-            gitUrl: "git@github.com:modcloth-labs/MCRotatingCarousel.git",
-            branch: "master",
-            publicKey: publicKey,
-            privateKey: privateKey,
-            deviceIds: ["eb5383447a7bfedad16f6cd86300aaa2"])
-        
+    func createBot(config: XBot.BotConfiguration) {
         config.performsTestAction = true
         
         server.createBot(config) { (success, bot) in
