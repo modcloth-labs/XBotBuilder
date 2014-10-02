@@ -8,6 +8,7 @@
 
 import Cocoa
 import XBot
+import Alamofire
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -18,9 +19,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
+        
+        //NOTE:
+        // A file named "DoNotCheckIn.swift" with "githubToken", "publicKey" and "privateKey" is expected
+        
+        GithubToken = githubToken
+        
+//        showStatus()
 
-        showStatus()
-
+        showRepo()
+        
 //        createBot()
         
 //        listDevices()
@@ -33,6 +41,44 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
     }
 
+    func showRepo() {
+        
+        let repo = "modcloth-labs/MCRotatingCarousel"
+        let prURL = "https://api.github.com/repos/\(repo)/pulls"
+        var prRequest = getGitHubRequest("GET", prURL)
+        
+        Alamofire.request(prRequest)
+            .responseJSON { (request, response, jsonOptional, error) in
+                if let prs = jsonOptional as AnyObject? as? [Dictionary<String, AnyObject>]{
+                    for pr in prs {
+                        println(pr["title"]!)
+                        if let head = pr["head"] as AnyObject? as? Dictionary<String, AnyObject> {
+                            let branch = head["ref"]! as String
+                            let sha = head["sha"]! as String
+                            println("branch: \(branch)")
+                            println("sha: \(sha)")
+
+                            //test posting status
+                            let params = ["state":"pending"]
+                            let postStatusURL = "https://api.github.com/repos/\(repo)/statuses/\(sha)"
+                            let getStatusURL = "https://api.github.com/repos/\(repo)/commits/\(sha)/statuses"
+                            
+                            var postStatusRequest = getGitHubRequest("POST", postStatusURL, bodyDictionary: params)
+                            
+                            Alamofire.request(postStatusRequest)
+                                .responseJSON { (request, response, jsonOptional, error) in
+                                    println(request.allHTTPHeaderFields)
+                                    println(response)
+                                    println("status: \(jsonOptional)")
+                            }
+                            
+                        }
+                    }
+
+                }
+        }
+    }
+    
     func showStatus() {
         server.fetchBots { (bots) in
             for bot in bots {
