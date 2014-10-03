@@ -8,6 +8,7 @@
 
 // Considering Robot: http://thenounproject.com/term/robot/699/
 // http://kmikael.com/2013/07/01/simple-menu-bar-apps-for-os-x/
+
 import Cocoa
 import XBot
 
@@ -24,23 +25,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var botPublicKey: NSTextField!
     @IBOutlet weak var botTestDeviceId: NSTextField!
     @IBOutlet weak var githubAPIToken: NSTextField!
-
     
+    var statusItem: NSStatusItem!
+
     var server = XBot.Server()
 
 
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
 
         showStatus()
-
-//        createBot()
+        self.statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
+        self.statusItem.title = ""
+        self.statusItem.image = NSImage(named: "robot_black")
+        self.statusItem.highlightMode = true
+        var menu = NSMenu()
+        menu.addItem(NSMenuItem.separatorItem())
+        menu.addItemWithTitle("Quit XBot", action: "terminate:", keyEquivalent: "")
+        self.statusItem.menu = menu
         
 //        listDevices()
-        
 //        deleteAllBots()
         
     }
-
+    
     @IBAction func didClickBuild(sender: AnyObject) {
         NSLog("Build the bot")
         //        let config = XBot.BotConfiguration(
