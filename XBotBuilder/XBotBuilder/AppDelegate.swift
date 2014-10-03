@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 ModCloth. All rights reserved.
 //
 
+// Considering Robot: http://thenounproject.com/term/robot/699/
+// http://kmikael.com/2013/07/01/simple-menu-bar-apps-for-os-x/
 import Cocoa
 import XBot
 
