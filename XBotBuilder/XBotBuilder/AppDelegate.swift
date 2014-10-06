@@ -48,10 +48,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func updateMenu(){
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss"
-        
-        self.lastPollMenuItem.title = "Polled Github at: \(dateFormatter.stringFromDate(self.lastPollTime))"
+        if (self.lastPollTime != nil && self.lastPollMenuItem != nil) {
+            var dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "HH:mm:ss"
+            self.lastPollMenuItem.title = "Polled Github at: \(dateFormatter.stringFromDate(self.lastPollTime))"
+        }
     }
     
     func configureAndShowMenuBarItem() {
