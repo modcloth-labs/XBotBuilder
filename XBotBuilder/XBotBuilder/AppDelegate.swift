@@ -71,7 +71,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func showPreferences(){
-        println("Ok")
+        self.window.makeKeyAndOrderFront(nil)
     }
     
     @IBAction func didClickBuild(sender: AnyObject) {
@@ -84,8 +84,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             publicKey: botPublicKey.stringValue,
             privateKey: botPrivateKey.stringValue,
             deviceIds: [botTestDeviceId.stringValue])
-
-        println(config)
         createBot(config)
     }
     
