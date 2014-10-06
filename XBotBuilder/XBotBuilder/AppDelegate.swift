@@ -27,38 +27,53 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var githubAPIToken: NSTextField!
     
     var statusItem: NSStatusItem!
+    var lastPollTime: NSDate!
+    var lastPollMenuItem: NSMenuItem!
 
     var server = XBot.Server()
 
 
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
-
-        showStatus()
+        self.pollForUpdates()
+        configureAndShowMenuBarItem()
+        var timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: Selector("pollForUpdates"), userInfo: nil, repeats: true)
+        NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+    }
+    
+    func pollForUpdates() {
+        var currentTime = NSDate()
+        //TODO: todo Github polling code goes here
+        self.lastPollTime = currentTime
+        self.updateMenu()
+    }
+    
+    func updateMenu(){
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        
+        self.lastPollMenuItem.title = "Polled Github at: \(dateFormatter.stringFromDate(self.lastPollTime))"
+    }
+    
+    func configureAndShowMenuBarItem() {
+        self.lastPollMenuItem = NSMenuItem()
+        self.lastPollMenuItem.title = "Never"
         self.statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
         self.statusItem.title = ""
         self.statusItem.image = NSImage(named: "robot_black")
         self.statusItem.highlightMode = true
         var menu = NSMenu()
+        menu.addItem(self.lastPollMenuItem)
         menu.addItem(NSMenuItem.separatorItem())
+        menu.addItemWithTitle("Open XBot Preferences", action: "showPreferences", keyEquivalent: "")
         menu.addItemWithTitle("Quit XBot", action: "terminate:", keyEquivalent: "")
         self.statusItem.menu = menu
-        
-//        listDevices()
-//        deleteAllBots()
-        
+    }
+    
+    func showPreferences(){
+        println("Ok")
     }
     
     @IBAction func didClickBuild(sender: AnyObject) {
-        NSLog("Build the bot")
-        //        let config = XBot.BotConfiguration(
-        //            name: "With Config",
-        //            projectOrWorkspace: "MCRotatingCarouselExample/MCRotatingCarouselExample.xcodeproj",
-        //            schemeName: "MCRotatingCarouselExample",
-        //            gitUrl: "git@github.com:modcloth-labs/MCRotatingCarousel.git",
-        //            branch: "master",
-        //            publicKey: publicKey,
-        //            privateKey: privateKey,
-        //            deviceIds: ["eb5383447a7bfedad16f6cd86300aaa2"])
         let config = XBot.BotConfiguration(
             name: botName.stringValue,
             projectOrWorkspace: botProjectName.stringValue,
