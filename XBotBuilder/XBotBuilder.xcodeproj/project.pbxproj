@@ -16,6 +16,7 @@
 		A4E60BD219DB767F0068A941 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E60BCF19DB765C0068A941 /* Alamofire.framework */; };
 		A4E60BD319DB76850068A941 /* Alamofire.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A4E60BCF19DB765C0068A941 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C4E4FC2219DDCA460028BF88 /* DoNotCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4FC2119DDCA460028BF88 /* DoNotCheckIn.swift */; };
+		C4E4FC2619E313F30028BF88 /* BotConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4FC2519E313F30028BF88 /* BotConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		A4B74DCB19DCBF9200A8AA24 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		A4E60BC919DB765C0068A941 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = ../Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		C4E4FC2119DDCA460028BF88 /* DoNotCheckIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoNotCheckIn.swift; sourceTree = "<group>"; };
+		C4E4FC2519E313F30028BF88 /* BotConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				C4E4FC2119DDCA460028BF88 /* DoNotCheckIn.swift */,
 				A40D9D5519DB56200048D70F /* MainMenu.xib */,
 				A40D9D4F19DB56200048D70F /* Supporting Files */,
+				C4E4FC2519E313F30028BF88 /* BotConfig.swift */,
 			);
 			path = XBotBuilder;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4E4FC2219DDCA460028BF88 /* DoNotCheckIn.swift in Sources */,
+				C4E4FC2619E313F30028BF88 /* BotConfig.swift in Sources */,
 				A40D9D5219DB56200048D70F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

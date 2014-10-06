@@ -31,14 +31,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var lastPollMenuItem: NSMenuItem!
 
     var server = XBot.Server()
+    var botConfig = BotConfig(botId: "1")
 
 
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
+        self.showPreferences()
         self.pollForUpdates()
         configureAndShowMenuBarItem()
         var timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: Selector("pollForUpdates"), userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
     }
+    
     
     func pollForUpdates() {
         var currentTime = NSDate()
@@ -46,6 +49,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.lastPollTime = currentTime
         self.updateMenu()
     }
+    
+    // MARK: Menu Concerns
     
     func updateMenu(){
         if (self.lastPollTime != nil && self.lastPollMenuItem != nil) {
@@ -71,7 +76,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func showPreferences(){
+        self.botName.stringValue = self.botConfig.botName
+        self.botProjectName.stringValue = self.botConfig.projectName
+        self.botGitUrl.stringValue = self.botConfig.gitUrl
+        self.botBranch.stringValue = self.botConfig.botBranch
+        self.botPrivateKey.stringValue = self.botConfig.botPrivateKey
+        self.botPublicKey.stringValue = self.botConfig.botPublicKey
+        self.botTestDeviceId.stringValue = self.botConfig.botTestDeviceId
+        self.githubAPIToken.stringValue = self.botConfig.githubAPIToken
+        self.botSchemeName.stringValue = self.botConfig.botSchemeName
+        self.botGitUrl.stringValue = self.botConfig.gitUrl
         self.window.makeKeyAndOrderFront(nil)
+    }
+    
+    override func controlTextDidChange(obj: NSNotification) {
+        self.botConfig.botName = botName.stringValue
+        
+        self.botConfig.botName = self.botName.stringValue
+        self.botConfig.projectName = self.botProjectName.stringValue
+        self.botConfig.gitUrl = self.botGitUrl.stringValue
+        self.botConfig.botBranch = self.botBranch.stringValue
+        self.botConfig.botPrivateKey = self.botPrivateKey.stringValue
+        self.botConfig.botPublicKey = self.botPublicKey.stringValue
+        self.botConfig.botTestDeviceId = self.botTestDeviceId.stringValue
+        self.botConfig.githubAPIToken = self.githubAPIToken.stringValue
+        self.botConfig.botSchemeName = self.botSchemeName.stringValue
     }
     
     @IBAction func didClickBuild(sender: AnyObject) {
