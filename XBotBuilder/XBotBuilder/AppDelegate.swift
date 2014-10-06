@@ -33,13 +33,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var server = XBot.Server()
     var botConfig = BotConfig(botId: "1")
 
-
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
-        self.showPreferences()
         self.pollForUpdates()
         configureAndShowMenuBarItem()
         var timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: Selector("pollForUpdates"), userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "windowHidden:", name: NSWindowDidResignKeyNotification, object: self.window)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "windowHidden:", name: NSWindowDidResignMainNotification, object: self.window)
+
     }
     
     
@@ -86,7 +87,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.githubAPIToken.stringValue = self.botConfig.githubAPIToken
         self.botSchemeName.stringValue = self.botConfig.botSchemeName
         self.botGitUrl.stringValue = self.botConfig.gitUrl
-        self.window.makeKeyAndOrderFront(nil)
+        NSApp.activateIgnoringOtherApps(true)
+        self.window.makeKeyAndOrderFront(self)
+    }
+    
+    func windowHidden(note: NSNotification){
+        self.window.close()
     }
     
     override func controlTextDidChange(obj: NSNotification) {
@@ -104,16 +110,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func didClickBuild(sender: AnyObject) {
-        let config = XBot.BotConfiguration(
-            name: botName.stringValue,
-            projectOrWorkspace: botProjectName.stringValue,
-            schemeName: botSchemeName.stringValue,
-            gitUrl: botGitUrl.stringValue,
-            branch: botBranch.stringValue,
-            publicKey: botPublicKey.stringValue,
-            privateKey: botPrivateKey.stringValue,
-            deviceIds: [botTestDeviceId.stringValue])
-        createBot(config)
+        createBot(self.botConfig.asXBotConfig())
     }
     
     func applicationWillTerminate(aNotification: NSNotification?) {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import XBot
 
 class BotConfig : NSObject {
     var botId: String
@@ -95,6 +96,18 @@ class BotConfig : NSObject {
         set(value){
             setValueForKey("githubAPIToken", value: value)
         }
+    }
+    
+    func asXBotConfig() -> XBot.BotConfiguration {
+        return XBot.BotConfiguration(
+            name: self.botName,
+            projectOrWorkspace: self.projectName,
+            schemeName: self.botSchemeName,
+            gitUrl: self.gitUrl,
+            branch: self.botBranch,
+            publicKey: self.botPublicKey,
+            privateKey: self.botPrivateKey,
+            deviceIds: [self.botTestDeviceId])
     }
     
     

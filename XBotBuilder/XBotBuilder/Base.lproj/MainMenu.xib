@@ -15,7 +15,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="XBotBuilder" customModuleProvider="target">
             <connections>
                 <outlet property="botBranch" destination="b82-z6-ABe" id="rXb-cC-Hgn"/>
-                <outlet property="botGitUrl" destination="x88-Nz-q0Z" id="8KI-LV-mc6"/>
+                <outlet property="botGitUrl" destination="b82-z6-ABe" id="IwD-63-TqV"/>
                 <outlet property="botName" destination="5E3-0t-0Sa" id="v48-hL-GEg"/>
                 <outlet property="botPrivateKey" destination="054-FL-y5e" id="siM-gZ-CLz"/>
                 <outlet property="botProjectName" destination="5Y7-i6-sWa" id="fQl-xN-o6f"/>
@@ -422,7 +422,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="506" height="502"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5E3-0t-0Sa">
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="5E3-0t-0Sa">
                         <rect key="frame" x="201" y="460" width="271" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="edm-UM-FRI">
                             <font key="font" metaFont="system"/>
