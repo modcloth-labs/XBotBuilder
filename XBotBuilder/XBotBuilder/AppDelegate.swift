@@ -15,25 +15,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
     
-    var server = XBot.Server()
-
-
+    let botServer = XBot.Server()
+    
+    let gitHubRepo = GitHubRepo(token: githubToken, repoName: "modcloth-labs/MCRotatingCarousel")
+    
+    let config = XBot.BotConfiguration(
+        name: "Template, not used", //TODO: refactor this?
+        projectOrWorkspace: "MCRotatingCarouselExample/MCRotatingCarouselExample.xcodeproj",
+        schemeName: "MCRotatingCarouselExample",
+        gitUrl: "git@github.com:modcloth-labs/MCRotatingCarousel.git",
+        branch: "master",
+        publicKey: publicKey,
+        privateKey: privateKey,
+        deviceIds: ["eb5383447a7bfedad16f6cd86300aaa2"])
+    
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
         
         //NOTE:
         // A file named "DoNotCheckIn.swift" with "githubToken", "publicKey" and "privateKey" is expected
         
-        GithubToken = githubToken
+        //        showStatus()
+        //        showRepo()
+        //        createBot()
+        //        listDevices()
+        //        deleteAllBots()
         
-//        showStatus()
-
-        showRepo()
+        config.performsTestAction = true
         
-//        createBot()
-        
-//        listDevices()
-        
-//        deleteAllBots()
+        let botSync = GitHubXBotSync(botServer: self.botServer, gitHubRepo: self.gitHubRepo , botConfig: self.config)
+        botSync.sync()
         
     }
 
@@ -41,6 +51,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
     }
 
+    /*
     func showRepo() {
         
         let repo = "modcloth-labs/MCRotatingCarousel"
@@ -134,6 +145,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
+    */
 
 }
 
