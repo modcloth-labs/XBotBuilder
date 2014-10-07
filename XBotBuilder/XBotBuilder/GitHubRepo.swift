@@ -9,6 +9,13 @@
 import Foundation
 import Alamofire
 
+enum CommitStatus : String {
+    case Pending = "pending"
+    case Success = "success"
+    case Error = "error"
+    case Failure = "failure"
+}
+
 class GitHubRepo {
 
     let server = "https://api.github.com"
@@ -36,10 +43,10 @@ class GitHubRepo {
     }
     
     //WARN use enum for status.  Requires "pending", etc...
-    func setStatus(status:String, sha:String, completion:()->()){
+    func setStatus(status:CommitStatus, sha:String, completion:()->()){
         
         //test posting status
-        let params = ["state":status]
+        let params = ["state":status.rawValue]
         let postStatusURL = "/repos/\(self.repoName)/statuses/\(sha)"
         var postStatusRequest = getGitHubRequest("POST", url: postStatusURL, bodyDictionary: params)
         
@@ -53,7 +60,7 @@ class GitHubRepo {
 
     }
     
-    func getStatus(sha:String, completion:(status:String)->()) {
+    func getStatus(sha:String, completion:(status:CommitStatus)->()) {
         let getStatusURL = "/repos/\(self.repoName)/commits/\(sha)/statuses"
         var getStatusRequest = getGitHubRequest("GET", url: getStatusURL)
         Alamofire.request(getStatusRequest)
@@ -61,7 +68,7 @@ class GitHubRepo {
                 println(response)
                 println("response json: \(jsonOptional)")
                 //WARN todo
-                completion(status: "someStatus")
+                completion(status: CommitStatus(rawValue:"pending")!)
         }
     }
     

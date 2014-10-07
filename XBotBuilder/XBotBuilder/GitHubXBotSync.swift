@@ -29,7 +29,7 @@ class GitHubXBotSync {
     
     //go through each XBot, if no open PR, delete
     func deleteUnusedXBots() {
-        /*
+        
         var finished = false
         
         botServer.fetchBots { (bots) -> () in
@@ -39,7 +39,7 @@ class GitHubXBotSync {
         }
         //WARN: always timing out
         waitUntil(&finished, 5)
-        */
+        
     }
     
     //go through each PR, create XBot (and start integration) if not present
@@ -88,13 +88,18 @@ class GitHubXBotSync {
                 botConfig.performsAnalyzeAction = botConfigTemplate.performsAnalyzeAction
                 botConfig.performsArchiveAction = botConfigTemplate.performsArchiveAction
                 
-                botServer.createBot(botConfig, completion: { (success, bot) -> () in
+                botServer.createBot(botConfig){ (success, bot) -> () in
                     let status = success ? "COMPLETED" : "FAILED"
-                    println("Bot Creation for \"\(title)\" - \(status)")
+                    println("\(bot?.name) (\(bot?.id)) creation \(status)")
                     
-                    //TODO: integrate
-                    //TODO: update github status
-                })
+                    bot?.integrate { (success, integration) in
+                        let status = success ? integration?.currentStep ?? "NO INTEGRATION STEP" : "FAILED"
+                        println("\(bot?.name) (\(bot?.id)) integration - \(status)")
+                        //TODO: update github status
+                        
+                        
+                    }
+                }
             }
             
             
