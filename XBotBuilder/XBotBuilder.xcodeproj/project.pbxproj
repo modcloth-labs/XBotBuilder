@@ -15,6 +15,7 @@
 		A4180F7A19DB5F4C00403AD9 /* XBot.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A4180F7419DB5EF500403AD9 /* XBot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A432F55719E46B94009E5DF3 /* GitHubXBotSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = A432F55619E46B94009E5DF3 /* GitHubXBotSync.swift */; };
 		A432F55D19E47257009E5DF3 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = A432F55C19E47257009E5DF3 /* Async.swift */; };
+		A432F55F19E48BA7009E5DF3 /* BotConfigTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A432F55E19E48BA7009E5DF3 /* BotConfigTemplate.swift */; };
 		A4B74DD119DCC9D600A8AA24 /* DoNotCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B74DD019DCC9D600A8AA24 /* DoNotCheckIn.swift */; };
 		A4B74E8819DE14A300A8AA24 /* GitHubRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B74E8719DE14A300A8AA24 /* GitHubRepo.swift */; };
 		A4E60BD219DB767F0068A941 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E60BCF19DB765C0068A941 /* Alamofire.framework */; };
@@ -88,6 +89,7 @@
 		A4180F6E19DB5EF500403AD9 /* XBot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XBot.xcodeproj; path = ../XBot/XBot.xcodeproj; sourceTree = "<group>"; };
 		A432F55619E46B94009E5DF3 /* GitHubXBotSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubXBotSync.swift; sourceTree = "<group>"; };
 		A432F55C19E47257009E5DF3 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
+		A432F55E19E48BA7009E5DF3 /* BotConfigTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotConfigTemplate.swift; sourceTree = "<group>"; };
 		A4B74DCB19DCBF9200A8AA24 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		A4B74DD019DCC9D600A8AA24 /* DoNotCheckIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoNotCheckIn.swift; sourceTree = "<group>"; };
 		A4B74E7E19DDCDA700A8AA24 /* XBotBuilder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XBotBuilder-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				A4B74E8719DE14A300A8AA24 /* GitHubRepo.swift */,
 				A432F55619E46B94009E5DF3 /* GitHubXBotSync.swift */,
 				A432F55C19E47257009E5DF3 /* Async.swift */,
+				A432F55E19E48BA7009E5DF3 /* BotConfigTemplate.swift */,
 			);
 			path = XBotBuilder;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				A432F55719E46B94009E5DF3 /* GitHubXBotSync.swift in Sources */,
 				A4B74E8819DE14A300A8AA24 /* GitHubRepo.swift in Sources */,
 				A4B74DD119DCC9D600A8AA24 /* DoNotCheckIn.swift in Sources */,
+				A432F55F19E48BA7009E5DF3 /* BotConfigTemplate.swift in Sources */,
 				A432F55D19E47257009E5DF3 /* Async.swift in Sources */,
 				A40D9D5219DB56200048D70F /* AppDelegate.swift in Sources */,
 			);

@@ -13,8 +13,8 @@ class GitHubRepo {
 
     let server = "https://api.github.com"
     
-    var token:String?
-    var repoName:String?
+    var token:String
+    var repoName:String
     
     init(token:String, repoName:String){
         self.token = token
@@ -24,7 +24,7 @@ class GitHubRepo {
     
     func fetchPullRequests(completion:([Dictionary<String, AnyObject>]) -> ())
     {
-        var prRequest = getGitHubRequest("GET", url: "/repos/\(self.repoName!)/pulls")
+        var prRequest = getGitHubRequest("GET", url: "/repos/\(self.repoName)/pulls")
         
         Alamofire.request(prRequest)
             .responseJSON { (request, response, jsonOptional, error) in
@@ -40,7 +40,7 @@ class GitHubRepo {
         
         //test posting status
         let params = ["state":status]
-        let postStatusURL = "/repos/\(self.repoName!)/statuses/\(sha)"
+        let postStatusURL = "/repos/\(self.repoName)/statuses/\(sha)"
         var postStatusRequest = getGitHubRequest("POST", url: postStatusURL, bodyDictionary: params)
         
         Alamofire.request(postStatusRequest)
@@ -54,7 +54,7 @@ class GitHubRepo {
     }
     
     func getStatus(sha:String, completion:(status:String)->()) {
-        let getStatusURL = "/repos/\(self.repoName!)/commits/\(sha)/statuses"
+        let getStatusURL = "/repos/\(self.repoName)/commits/\(sha)/statuses"
         var getStatusRequest = getGitHubRequest("GET", url: getStatusURL)
         Alamofire.request(getStatusRequest)
             .responseJSON { (request, response, jsonOptional, error) in
@@ -67,7 +67,7 @@ class GitHubRepo {
     
     func getGitHubRequest(method:String, url:String, bodyDictionary:AnyObject? = nil) -> NSMutableURLRequest {
         var request = NSMutableURLRequest(URL: NSURL(string: "\(server)\(url)")!)
-        request.setValue("token \(self.token!)", forHTTPHeaderField:"Authorization")
+        request.setValue("token \(self.token)", forHTTPHeaderField:"Authorization")
         request.HTTPMethod = method
         
         if let body: AnyObject = bodyDictionary {
