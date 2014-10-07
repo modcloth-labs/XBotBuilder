@@ -15,7 +15,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="XBotBuilder" customModuleProvider="target">
             <connections>
                 <outlet property="botBranch" destination="b82-z6-ABe" id="rXb-cC-Hgn"/>
-                <outlet property="botGitUrl" destination="b82-z6-ABe" id="IwD-63-TqV"/>
+                <outlet property="botGitUrl" destination="x88-Nz-q0Z" id="UeG-7n-vCr"/>
                 <outlet property="botName" destination="5E3-0t-0Sa" id="v48-hL-GEg"/>
                 <outlet property="botPrivateKey" destination="054-FL-y5e" id="siM-gZ-CLz"/>
                 <outlet property="botProjectName" destination="5Y7-i6-sWa" id="fQl-xN-o6f"/>
