@@ -18,6 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     let gitHubRepo = GitHubRepo(token: githubToken, repoName: "modcloth-labs/MCRotatingCarousel")
     var statusItem: NSStatusItem!
+    var lastPollTime: NSDate!
     var lastPollMenuItem: NSMenuItem!
     
     let template = BotConfigTemplate(
@@ -35,14 +36,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         //NOTE:
         // A file named "DoNotCheckIn.swift" with "githubToken", "publicKey" and "privateKey" is expected
-        configureAndShowMenuBarItem()
+        
+        self.configureAndShowMenuBarItem()
+        self.pollForUpdates()
 
         let botSync = GitHubXBotSync(
             botServer: self.botServer,
             gitHubRepo: self.gitHubRepo,
             botConfigTemplate: self.template)
         botSync.sync()
-        
+    }
+    
+    func pollForUpdates() {
+        var currentTime = NSDate()
+        //TODO: todo Github polling code goes here
+        self.lastPollTime = currentTime
+        self.updateMenu()
+    }
+    func updateMenu(){
+        if (self.lastPollTime != nil && self.lastPollMenuItem != nil) {
+            var dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "HH:mm:ss"
+            self.lastPollMenuItem.title = "Polled Github at: \(dateFormatter.stringFromDate(self.lastPollTime))"
+        }
     }
     
     func configureAndShowMenuBarItem() {
