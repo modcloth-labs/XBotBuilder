@@ -17,6 +17,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let botServer = XBot.Server(host:"10.3.10.64", user: "xcode_bot", password:"Disco1990")
     
     let gitHubRepo = GitHubRepo(token: githubToken, repoName: "modcloth-labs/MCRotatingCarousel")
+    var statusItem: NSStatusItem!
+    var lastPollMenuItem: NSMenuItem!
     
     let template = BotConfigTemplate(
         projectOrWorkspace:"MCRotatingCarouselExample/MCRotatingCarouselExample.xcodeproj",
@@ -33,13 +35,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         //NOTE:
         // A file named "DoNotCheckIn.swift" with "githubToken", "publicKey" and "privateKey" is expected
-        
+        configureAndShowMenuBarItem()
+
         let botSync = GitHubXBotSync(
             botServer: self.botServer,
             gitHubRepo: self.gitHubRepo,
             botConfigTemplate: self.template)
         botSync.sync()
         
+    }
+    
+    func configureAndShowMenuBarItem() {
+        self.lastPollMenuItem = NSMenuItem()
+        self.lastPollMenuItem.title = "Never"
+        self.statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
+        self.statusItem.title = ""
+        self.statusItem.image = NSImage(named: "robot_black")
+        self.statusItem.highlightMode = true
+        var menu = NSMenu()
+        menu.addItem(self.lastPollMenuItem)
+        menu.addItem(NSMenuItem.separatorItem())
+        menu.addItemWithTitle("Open XBot Preferences", action: "showPreferences", keyEquivalent: "")
+        menu.addItemWithTitle("Quit XBot", action: "terminate:", keyEquivalent: "")
+        self.statusItem.menu = menu
     }
 
     func applicationWillTerminate(aNotification: NSNotification?) {
