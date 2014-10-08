@@ -12,7 +12,7 @@ class BotServerConfig {
     init(){
         
     }
-        
+    
     var host: String {
         get {
             return "10.0.0.1"

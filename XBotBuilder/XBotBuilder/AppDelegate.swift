@@ -15,6 +15,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var window: NSWindow!
 
     var botServerConfig = BotServerConfig()
+    var githubConfig = GithubConfig()
+    
     var botServer: XBot.Server!
     var botSync: GitHubXBotSync!
     
@@ -77,11 +79,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.serverPort.stringValue = self.botServerConfig.port
         self.serverUsername.stringValue = self.botServerConfig.user
         self.serverPassword.stringValue = self.botServerConfig.password
+
+        self.githubAPIToken.stringValue = self.githubConfig.apiToken
+        self.githubProjectIdentifier.stringValue = self.githubConfig.projectIdentifier
     }
-    
+
     func pollForUpdates() {
         var currentTime = NSDate()
-        self.botSync.sync()
+//        self.botSync.sync()
         self.lastPollTime = currentTime
         self.updateMenu()
     }

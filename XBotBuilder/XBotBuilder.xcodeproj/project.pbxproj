@@ -22,6 +22,8 @@
 		A4E60BD219DB767F0068A941 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E60BCF19DB765C0068A941 /* Alamofire.framework */; };
 		A4E60BD319DB76850068A941 /* Alamofire.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A4E60BCF19DB765C0068A941 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C478C95919E5BC4D00AE369B /* BotServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C478C95819E5BC4D00AE369B /* BotServerConfig.swift */; };
+		C478C96019E5DD4A00AE369B /* GithubConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C478C95F19E5DD4A00AE369B /* GithubConfig.swift */; };
+		C478C96219E5DE1D00AE369B /* ProjectConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C478C96119E5DE1D00AE369B /* ProjectConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +99,8 @@
 		A4B74E8719DE14A300A8AA24 /* GitHubRepo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubRepo.swift; sourceTree = "<group>"; };
 		A4E60BC919DB765C0068A941 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = ../Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		C478C95819E5BC4D00AE369B /* BotServerConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotServerConfig.swift; sourceTree = "<group>"; };
+		C478C95F19E5DD4A00AE369B /* GithubConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubConfig.swift; sourceTree = "<group>"; };
+		C478C96119E5DE1D00AE369B /* ProjectConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,7 +158,7 @@
 				A432F55C19E47257009E5DF3 /* Async.swift */,
 				A432F55E19E48BA7009E5DF3 /* BotConfigTemplate.swift */,
 				A432F56B19E4A26B009E5DF3 /* GitHubPullRequest.swift */,
-				C478C95819E5BC4D00AE369B /* BotServerConfig.swift */,
+				C478C95E19E5DD1300AE369B /* Configuration Persistence */,
 			);
 			path = XBotBuilder;
 			sourceTree = "<group>";
@@ -200,6 +204,16 @@
 				A4E60BD119DB765C0068A941 /* AlamofireTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C478C95E19E5DD1300AE369B /* Configuration Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				C478C95819E5BC4D00AE369B /* BotServerConfig.swift */,
+				C478C95F19E5DD4A00AE369B /* GithubConfig.swift */,
+				C478C96119E5DE1D00AE369B /* ProjectConfig.swift */,
+			);
+			name = "Configuration Persistence";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,8 +357,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C478C96019E5DD4A00AE369B /* GithubConfig.swift in Sources */,
 				A432F55719E46B94009E5DF3 /* GitHubXBotSync.swift in Sources */,
 				A432F56C19E4A26B009E5DF3 /* GitHubPullRequest.swift in Sources */,
+				C478C96219E5DE1D00AE369B /* ProjectConfig.swift in Sources */,
 				C478C95919E5BC4D00AE369B /* BotServerConfig.swift in Sources */,
 				A4B74E8819DE14A300A8AA24 /* GitHubRepo.swift in Sources */,
 				A4B74DD119DCC9D600A8AA24 /* DoNotCheckIn.swift in Sources */,
