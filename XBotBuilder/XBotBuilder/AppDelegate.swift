@@ -92,6 +92,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.projectTestBuild.state = self.projectConfig.testBuild ? NSOnState : NSOffState
         self.projectAnalyzeBuild.state = self.projectConfig.analyzeBuild ? NSOnState : NSOffState
         self.projectArchiveBuild.state = self.projectConfig.archiveBuild ? NSOnState : NSOffState
+    func persistFromOutlets() {
+        //        self.botServerConfig.host = self.serverAddress.stringValue
+        //        self.botServerConfig.port = self.serverPort.stringValue
+        //        self.botServerConfig.user = self.serverUsername.stringValue
+        //        self.botServerConfig.password = self.serverPassword.stringValue
+        
+        //        self.githubConfig.apiToken = self.githubAPIToken.stringValue
+        //        self.githubConfig.projectIdentifier = self.githubProjectIdentifier.stringValue
+        //        
+        //        self.projectConfig.nameOrWorkspace = self.projectNameOrWorkspace.stringValue
+        //        self.projectConfig.schemeName = self.projectSchemeName.stringValue
+        //        self.projectConfig.privateKey = self.projectPrivateKey.stringValue
+        //        self.projectConfig.publicKey =  self.projectPublicKey.stringValue
+        //        self.projectConfig.testDeviceId = self.projectTestDeviceId.stringValue
+        //        self.projectConfig.testBuild = self.projectTestBuild.state == NSOnState
+        //        self.projectConfig.analyzeBuild = self.projectAnalyzeBuild.state == NSOnState
+        //        self.projectConfig.archiveBuild = self.projectArchiveBuild.state  == NSOnState
+
     }
 
     func pollForUpdates() {
