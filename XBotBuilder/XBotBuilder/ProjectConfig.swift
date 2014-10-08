@@ -17,11 +17,17 @@ class ProjectConfig {
         get {
             return "workspace-100"
         }
+        set {
+            
+        }
     }
     
     var schemeName: String {
         get {
             return "schemeName"
+        }
+        set {
+            
         }
     }
     
@@ -29,11 +35,17 @@ class ProjectConfig {
         get {
             return "super secret private key"
         }
+        set {
+            
+        }
     }
     
     var publicKey: String {
         get {
             return "give this to anyone- public key"
+        }
+        set {
+            
         }
     }
     
@@ -41,11 +53,17 @@ class ProjectConfig {
         get {
             return "AABBCC-1111"
         }
+        set {
+            
+        }
     }
     
     var testBuild: Bool {
         get {
             return true;
+        }
+        set {
+            
         }
     }
     
@@ -53,11 +71,17 @@ class ProjectConfig {
         get {
             return false;
         }
+        set {
+            
+        }
     }
     
     var archiveBuild: Bool {
         get {
             return false;
+        }
+        set {
+            
         }
     }
 }

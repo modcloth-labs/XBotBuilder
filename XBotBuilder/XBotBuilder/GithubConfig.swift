@@ -17,11 +17,17 @@ class GithubConfig {
         get {
             return "Super Long String of numbers and letters"
         }
+        set {
+            
+        }
     }
     
     var projectIdentifier: String {
         get {
             return "modcloth-lab/xbot"
+        }
+        set {
+            
         }
     }
 

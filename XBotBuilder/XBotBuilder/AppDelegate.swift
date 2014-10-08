@@ -100,18 +100,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.botServerConfig.user = self.serverUsername.stringValue
         self.botServerConfig.password = self.serverPassword.stringValue
         
-        //        self.githubConfig.apiToken = self.githubAPIToken.stringValue
-        //        self.githubConfig.projectIdentifier = self.githubProjectIdentifier.stringValue
-        //        
-        //        self.projectConfig.nameOrWorkspace = self.projectNameOrWorkspace.stringValue
-        //        self.projectConfig.schemeName = self.projectSchemeName.stringValue
-        //        self.projectConfig.privateKey = self.projectPrivateKey.stringValue
-        //        self.projectConfig.publicKey =  self.projectPublicKey.stringValue
-        //        self.projectConfig.testDeviceId = self.projectTestDeviceId.stringValue
-        //        self.projectConfig.testBuild = self.projectTestBuild.state == NSOnState
-        //        self.projectConfig.analyzeBuild = self.projectAnalyzeBuild.state == NSOnState
-        //        self.projectConfig.archiveBuild = self.projectArchiveBuild.state  == NSOnState
-
+        self.githubConfig.apiToken = self.githubAPIToken.stringValue
+        self.githubConfig.projectIdentifier = self.githubProjectIdentifier.stringValue
+        
+        self.projectConfig.nameOrWorkspace = self.projectNameOrWorkspace.stringValue
+        self.projectConfig.schemeName = self.projectSchemeName.stringValue
+        self.projectConfig.privateKey = self.projectPrivateKey.stringValue
+        self.projectConfig.publicKey =  self.projectPublicKey.stringValue
+        self.projectConfig.testDeviceId = self.projectTestDeviceId.stringValue
+        self.projectConfig.testBuild = self.projectTestBuild.state == NSOnState
+        self.projectConfig.analyzeBuild = self.projectAnalyzeBuild.state == NSOnState
+        self.projectConfig.archiveBuild = self.projectArchiveBuild.state  == NSOnState
     }
 
     func pollForUpdates() {
