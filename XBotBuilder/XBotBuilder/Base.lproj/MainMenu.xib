@@ -725,7 +725,7 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hkp-Ie-mjt">
+                                        <textField identifier="serverAddress" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hkp-Ie-mjt">
                                             <rect key="frame" x="218" y="300" width="271" height="22"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="justified" placeholderString="10.0.1.1" drawsBackground="YES" id="1xA-jT-omi">
                                                 <font key="font" metaFont="system"/>

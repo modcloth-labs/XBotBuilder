@@ -14,14 +14,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
 
-    let botServer = XBot.Server(host:"10.3.10.64", user: "xcode_bot", password:"Disco1990")
+    var botServerConfig = BotServerConfig()
+    var botServer: XBot.Server!
     var botSync: GitHubXBotSync!
     
     let gitHubRepo = GitHubRepo(token: githubToken, repoName: "modcloth-labs/MCRotatingCarousel")
     var statusItem: NSStatusItem!
     var lastPollTime: NSDate!
     var lastPollMenuItem: NSMenuItem!
-    
     
     @IBOutlet weak var serverAddress: NSTextField!
     @IBOutlet weak var serverPort: NSTextField!
@@ -55,16 +55,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         //NOTE:
         // A file named "DoNotCheckIn.swift" with "githubToken", "publicKey" and "privateKey" is expected
+        self.botServer = XBot.Server(host:self.botServerConfig.host,
+            user:self.botServerConfig.user,
+            password:self.botServerConfig.password)
         self.botSync = GitHubXBotSync(
             botServer: self.botServer,
             gitHubRepo: self.gitHubRepo,
             botConfigTemplate: self.template)
+        
+        self.updateOutletsFromConfig()
         
         self.configureAndShowMenuBarItem()
         self.pollForUpdates()
         var timer = NSTimer.scheduledTimerWithTimeInterval(180, target: self, selector: Selector("pollForUpdates"), userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
 
+    }
+    
+    func updateOutletsFromConfig() {
+        self.serverAddress.stringValue = self.botServerConfig.host
+        self.serverPort.stringValue = self.botServerConfig.port
+        self.serverUsername.stringValue = self.botServerConfig.user
+        self.serverPassword.stringValue = self.botServerConfig.password
     }
     
     func pollForUpdates() {

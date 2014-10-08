@@ -21,6 +21,7 @@
 		A4B74E8819DE14A300A8AA24 /* GitHubRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B74E8719DE14A300A8AA24 /* GitHubRepo.swift */; };
 		A4E60BD219DB767F0068A941 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E60BCF19DB765C0068A941 /* Alamofire.framework */; };
 		A4E60BD319DB76850068A941 /* Alamofire.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A4E60BCF19DB765C0068A941 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C478C95919E5BC4D00AE369B /* BotServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C478C95819E5BC4D00AE369B /* BotServerConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		A4B74E7E19DDCDA700A8AA24 /* XBotBuilder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XBotBuilder-Bridging-Header.h"; sourceTree = "<group>"; };
 		A4B74E8719DE14A300A8AA24 /* GitHubRepo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubRepo.swift; sourceTree = "<group>"; };
 		A4E60BC919DB765C0068A941 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = ../Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
+		C478C95819E5BC4D00AE369B /* BotServerConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotServerConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 				A432F55C19E47257009E5DF3 /* Async.swift */,
 				A432F55E19E48BA7009E5DF3 /* BotConfigTemplate.swift */,
 				A432F56B19E4A26B009E5DF3 /* GitHubPullRequest.swift */,
+				C478C95819E5BC4D00AE369B /* BotServerConfig.swift */,
 			);
 			path = XBotBuilder;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 			files = (
 				A432F55719E46B94009E5DF3 /* GitHubXBotSync.swift in Sources */,
 				A432F56C19E4A26B009E5DF3 /* GitHubPullRequest.swift in Sources */,
+				C478C95919E5BC4D00AE369B /* BotServerConfig.swift in Sources */,
 				A4B74E8819DE14A300A8AA24 /* GitHubRepo.swift in Sources */,
 				A4B74DD119DCC9D600A8AA24 /* DoNotCheckIn.swift in Sources */,
 				A432F55F19E48BA7009E5DF3 /* BotConfigTemplate.swift in Sources */,
