@@ -22,6 +22,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var lastPollTime: NSDate!
     var lastPollMenuItem: NSMenuItem!
     
+    
+    @IBOutlet weak var serverAddress: NSTextField!
+    @IBOutlet weak var serverPort: NSTextField!
+    @IBOutlet weak var serverUsername: NSTextField!
+    @IBOutlet weak var serverPassword: NSSecureTextField!
+    
+    @IBOutlet weak var projectNameOrWorkspace: NSTextField!
+    @IBOutlet weak var projectSchemeName: NSTextField!
+    @IBOutlet weak var projectPrivateKey: NSTextField!
+    @IBOutlet weak var projectPublicKey: NSTextField!
+    @IBOutlet weak var projectTestDeviceId: NSTextField!
+    @IBOutlet weak var projectTestBuild: NSButton!
+    @IBOutlet weak var projectAnalyzeBuild: NSButton!
+    @IBOutlet weak var projectArchiveBuild: NSButton!
+    
+    @IBOutlet weak var githubAPIToken: NSTextField!
+    @IBOutlet weak var githubProjectIdentifier: NSTextField!
+    
     let template = BotConfigTemplate(
         projectOrWorkspace:"MCRotatingCarouselExample/MCRotatingCarouselExample.xcodeproj",
         schemeName:"MCRotatingCarouselExample",

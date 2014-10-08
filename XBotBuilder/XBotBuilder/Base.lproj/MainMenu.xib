@@ -14,6 +14,20 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="XBotBuilder" customModuleProvider="target">
             <connections>
+                <outlet property="githubAPIToken" destination="biY-gp-WzU" id="gxs-Ul-soY"/>
+                <outlet property="githubProjectIdentifier" destination="xaW-Fp-wJo" id="H96-8L-n0t"/>
+                <outlet property="projectAnalyzeBuild" destination="9du-ZU-tzb" id="lFE-OU-Wd1"/>
+                <outlet property="projectArchiveBuild" destination="WTU-YQ-KVh" id="hnL-P6-qvW"/>
+                <outlet property="projectNameOrWorkspace" destination="0yd-zn-8S7" id="Rdc-Yt-ftp"/>
+                <outlet property="projectPrivateKey" destination="Frn-Yx-WyG" id="Yun-Qa-lFi"/>
+                <outlet property="projectPublicKey" destination="Ovo-6n-2K9" id="sJG-Ie-hhw"/>
+                <outlet property="projectSchemeName" destination="bf7-Vg-FDG" id="j3U-F9-8dI"/>
+                <outlet property="projectTestBuild" destination="6vD-Be-Trp" id="h2c-Mx-X8I"/>
+                <outlet property="projectTestDeviceId" destination="dVl-Fd-V44" id="oHt-hV-0be"/>
+                <outlet property="serverAddress" destination="hkp-Ie-mjt" id="nZc-Z2-ivu"/>
+                <outlet property="serverPassword" destination="J9K-dh-iD8" id="xJ0-Ej-RNF"/>
+                <outlet property="serverPort" destination="9sI-AM-6tO" id="dOC-JL-bOx"/>
+                <outlet property="serverUsername" destination="qO5-j2-xjd" id="ahM-BF-jch"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -673,8 +687,27 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="552" height="460"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="68a-Ft-78e">
+                        <rect key="frame" x="73" y="394" width="363" height="51"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="XBot is a utility which polls Github for pull requests, runs them on XCode server, and reports the status to the pull request." id="fAJ-AC-cWc">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nmx-H9-SFG">
+                        <rect key="frame" x="20" y="399" width="41" height="41"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Big Robot" id="NSD-Is-33R"/>
+                    </imageView>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FyA-sC-Bjl">
+                        <rect key="frame" x="443" y="402" width="95" height="32"/>
+                        <buttonCell key="cell" type="push" title="Poll Now" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="c8B-oT-u5j">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
                     <tabView fixedFrame="YES" initialItem="p1L-5g-gco" translatesAutoresizingMaskIntoConstraints="NO" id="hRN-zG-Y8L">
                         <rect key="frame" x="13" y="16" width="526" height="371"/>
                         <font key="font" metaFont="system"/>
@@ -755,7 +788,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Project" identifier="2" id="p1L-5g-gco">
-                                <view key="view" id="F6o-tO-FAy">
+                                <view key="view" ambiguous="YES" id="F6o-tO-FAy">
                                     <rect key="frame" x="10" y="33" width="506" height="325"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -864,7 +897,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Github" identifier="" id="etK-1R-SSB">
-                                <view key="view" ambiguous="YES" id="EPs-9i-dCo">
+                                <view key="view" id="EPs-9i-dCo">
                                     <rect key="frame" x="10" y="33" width="506" height="325"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -905,31 +938,12 @@
                             </tabViewItem>
                         </tabViewItems>
                     </tabView>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="68a-Ft-78e">
-                        <rect key="frame" x="73" y="389" width="363" height="51"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="XBot is a utility which polls Github for pull requests, runs them on XCode server, and reports the status to the pull request." id="fAJ-AC-cWc">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nmx-H9-SFG">
-                        <rect key="frame" x="20" y="399" width="41" height="41"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Big Robot" id="NSD-Is-33R"/>
-                    </imageView>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FyA-sC-Bjl">
-                        <rect key="frame" x="443" y="402" width="95" height="32"/>
-                        <buttonCell key="cell" type="push" title="Poll Now" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="c8B-oT-u5j">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
                 </subviews>
             </view>
             <point key="canvasLocation" x="175" y="141"/>
         </window>
     </objects>
     <resources>
-        <image name="Big Robot" width="128" height="128"/>
+        <image name="Big Robot" width="1200" height="1200"/>
     </resources>
 </document>
