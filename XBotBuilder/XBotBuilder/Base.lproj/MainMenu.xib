@@ -755,7 +755,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Project" identifier="2" id="p1L-5g-gco">
-                                <view key="view" ambiguous="YES" id="F6o-tO-FAy">
+                                <view key="view" id="F6o-tO-FAy">
                                     <rect key="frame" x="10" y="33" width="506" height="325"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -864,12 +864,12 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Github" identifier="" id="etK-1R-SSB">
-                                <view key="view" id="EPs-9i-dCo">
+                                <view key="view" ambiguous="YES" id="EPs-9i-dCo">
                                     <rect key="frame" x="10" y="33" width="506" height="325"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bnl-0G-VaG">
-                                            <rect key="frame" x="15" y="303" width="48" height="17"/>
+                                            <rect key="frame" x="15" y="252" width="48" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Project" id="6Ha-Dg-IYB">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -877,7 +877,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xaW-Fp-wJo">
-                                            <rect key="frame" x="218" y="300" width="271" height="22"/>
+                                            <rect key="frame" x="218" y="249" width="271" height="22"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="modcloth-labs/xbot" drawsBackground="YES" id="QND-1f-Pgj">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -885,15 +885,15 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="biY-gp-WzU">
-                                            <rect key="frame" x="158" y="270" width="331" height="22"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="e72e16c7e42f292c6912e7710c838347ae178b4a" drawsBackground="YES" id="Ibx-hj-061">
+                                            <rect key="frame" x="88" y="280" width="331" height="22"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" placeholderString="e72e16c7e42f292c6912e7710c838347ae178b4a" drawsBackground="YES" id="Ibx-hj-061">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D7u-bR-r4e">
-                                            <rect key="frame" x="15" y="273" width="113" height="17"/>
+                                            <rect key="frame" x="197" y="305" width="113" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Github API Token" id="s4u-Wf-R4z">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
