@@ -32,6 +32,7 @@ class GitHubRepo {
                 if let prs = jsonOptional as AnyObject? as? [Dictionary<String, AnyObject>]{
                     for pr in prs {
                         var pullRequest = GitHubPullRequest(gitHubDictionary: pr)
+                        pullRequests.append(pullRequest)
                     }
                 }
                 completion(pullRequests)
@@ -39,10 +40,8 @@ class GitHubRepo {
 
     }
     
-    //WARN use enum for status.  Requires "pending", etc...
     func setStatus(status:CommitStatus, sha:String, completion:()->()){
         
-        //test posting status
         let params = ["state":status.rawValue]
         let postStatusURL = "/repos/\(self.repoName)/statuses/\(sha)"
         var postStatusRequest = getGitHubRequest("POST", url: postStatusURL, bodyDictionary: params)
@@ -59,10 +58,12 @@ class GitHubRepo {
         var getStatusRequest = getGitHubRequest("GET", url: getStatusURL)
         Alamofire.request(getStatusRequest)
             .responseJSON { (request, response, jsonOptional, error) in
-                
-                if let json = jsonOptional as AnyObject? as Dictionary<String, AnyObject>? {
-                    if let state:String = json["state"] as AnyObject? as String? {
-                        completion(status: CommitStatus(rawValue:state)!)
+
+                if let json = jsonOptional as AnyObject? as [Dictionary<String, AnyObject>]? {
+                    if let firstStatus = json.first?{
+                        if let state:String = firstStatus["state"] as AnyObject? as String? {
+                            completion(status: CommitStatus(rawValue:state)!)
+                        }
                     }
                 }
         }
