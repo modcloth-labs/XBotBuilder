@@ -9,6 +9,17 @@
 import Foundation
 import XBot
 
+class GitXBotInfo {
+    var bot:XBot.Bot?
+    var latestIntegration:XBot.Integration?
+    var pr:GitHubPullRequest?
+    var prCommitStatus:CommitStatus?
+    
+    init(){
+        
+    }
+}
+
 class GitHubXBotSync {
 
     var botServer:XBot.Server
@@ -29,7 +40,7 @@ class GitHubXBotSync {
     
     //go through each XBot, if no open PR, delete
     func deleteUnusedXBots() {
-        
+        /*
         var finished = false
         
         botServer.fetchBots { (bots) -> () in
@@ -37,15 +48,15 @@ class GitHubXBotSync {
                 bot.delete{ (success) in }
             }
         }
-        //WARN: always timing out
+        //WARN always timing out
         waitUntil(&finished, 5)
-        
+        */
     }
     
     //go through each PR, create XBot (and start integration) if not present
     func createNewXBots() {
         
-        var prs:[Dictionary<String, AnyObject>] = []
+        var prs:[GitHubPullRequest] = []
         var bots:[Bot] = []
         
         var prFinished = false
@@ -64,22 +75,48 @@ class GitHubXBotSync {
 
         waitUntil(finishedBoth, 10)
         
+        //combine prs and bots
+        var gitXBotInfos:[GitXBotInfo] = []
+        for pr in prs {
+            if pr.sha == nil || pr.branch == nil || pr.title == nil {return}
+
+            var info = GitXBotInfo()
+            info.pr = pr
+            let matchingBots = bots.filter{ $0.name == pr.xBotTitle }
+            if let matchedBot = matchingBots.first {
+                info.bot = matchedBot
+            }
+            gitXBotInfos.append(info)
+        }
+        
+        for bot in bots {
+            let matchingInfos = gitXBotInfos.filter{ if let existingName = $0.bot?.name { return existingName == bot.name } else { return false} }
+            if matchingInfos.count == 0 {
+                var info = GitXBotInfo()
+                info.bot = bot
+                gitXBotInfos.append(info)
+            }
+        }
+        
+        
+        
         
         for pr in prs {
-            let title = titleForPR(pr)
+            if pr.sha == nil || pr.branch == nil || pr.title == nil {return}
             
-            let matchingBots = bots.filter{ $0.name == title }
+            let matchingBots = bots.filter{ $0.name == pr.xBotTitle }
             if let matchedBot = matchingBots.first {
                 //TODO: check status
-                println("Bot Already Created for \"\(title)\"")
+                println("Bot Already Created for \"\(pr.xBotTitle)\"")
+                
             } else {
                 
                 var botConfig = XBot.BotConfiguration(
-                    name:title,
+                    name:pr.xBotTitle,
                     projectOrWorkspace:botConfigTemplate.projectOrWorkspace,
                     schemeName:botConfigTemplate.schemeName,
                     gitUrl:"git@github.com:\(gitHubRepo.repoName).git",
-                    branch:"master", //TODO
+                    branch:pr.branch!,
                     publicKey:botConfigTemplate.publicKey,
                     privateKey:botConfigTemplate.privateKey,
                     deviceIds:botConfigTemplate.deviceIds
@@ -95,8 +132,10 @@ class GitHubXBotSync {
                     bot?.integrate { (success, integration) in
                         let status = success ? integration?.currentStep ?? "NO INTEGRATION STEP" : "FAILED"
                         println("\(bot?.name) (\(bot?.id)) integration - \(status)")
-                        //TODO: update github status
                         
+                        self.gitHubRepo.setStatus(.Pending, sha: pr.sha!){ () -> () in
+                            //TODO
+                        }
                         
                     }
                 }
@@ -110,15 +149,37 @@ class GitHubXBotSync {
     //go through each XBot, update PR status as required
     //go through each PR, start new integration if there is a new commit
     func syncStatus() {
+        var prs:[GitHubPullRequest] = []
+        var bots:[Bot] = []
         
-    }
-    
-    func titleForPR(pr:Dictionary<String, AnyObject>) -> (String) {
-        let prNumber: AnyObject? = pr["number"]
-        let prTitle: AnyObject? = pr["title"]
+        var prFinished = false
+        var botFinished = false
+        var finishedBoth:() -> (Bool) = { return prFinished && botFinished }
         
+        gitHubRepo.fetchPullRequests { (fetchedPRs)  in
+            prs = fetchedPRs
+            prFinished = true
+        }
         
-        return "XBot PR#\(prNumber!) - \(prTitle!)"
+        botServer.fetchBots({ (fetchedBots) in
+            bots = fetchedBots
+            botFinished = true
+        })
+        
+        waitUntil(finishedBoth, 10)
+        
+        for bot in bots {
+            bot.fetchLatestIntegration{ (latestIntegration) in
+                if let latestIntegration = latestIntegration {
+                    println("\(bot.name) \(latestIntegration.currentStep) \(latestIntegration.result)")
+                    let status = CommitStatus.fromXBotStatusText(latestIntegration.result)
+                    
+                } else {
+                    //no integration - start one?
+                }
+            }
+        }
+        
     }
     
 }

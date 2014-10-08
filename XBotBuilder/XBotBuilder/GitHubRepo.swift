@@ -9,13 +9,6 @@
 import Foundation
 import Alamofire
 
-enum CommitStatus : String {
-    case Pending = "pending"
-    case Success = "success"
-    case Error = "error"
-    case Failure = "failure"
-}
-
 class GitHubRepo {
 
     let server = "https://api.github.com"
@@ -29,15 +22,19 @@ class GitHubRepo {
     }
     
     
-    func fetchPullRequests(completion:([Dictionary<String, AnyObject>]) -> ())
+    func fetchPullRequests(completion:([GitHubPullRequest]) -> ())
     {
         var prRequest = getGitHubRequest("GET", url: "/repos/\(self.repoName)/pulls")
         
         Alamofire.request(prRequest)
             .responseJSON { (request, response, jsonOptional, error) in
+                var pullRequests:[GitHubPullRequest] = []
                 if let prs = jsonOptional as AnyObject? as? [Dictionary<String, AnyObject>]{
-                    completion(prs)
+                    for pr in prs {
+                        var pullRequest = GitHubPullRequest(gitHubDictionary: pr)
+                    }
                 }
+                completion(pullRequests)
         }
 
     }
@@ -52,9 +49,6 @@ class GitHubRepo {
         
         Alamofire.request(postStatusRequest)
             .responseJSON { (request, response, jsonOptional, error) in
-                println(request.allHTTPHeaderFields)
-                println(response)
-                println("status: \(jsonOptional)")
                 completion()
         }
 
@@ -65,10 +59,12 @@ class GitHubRepo {
         var getStatusRequest = getGitHubRequest("GET", url: getStatusURL)
         Alamofire.request(getStatusRequest)
             .responseJSON { (request, response, jsonOptional, error) in
-                println(response)
-                println("response json: \(jsonOptional)")
-                //WARN todo
-                completion(status: CommitStatus(rawValue:"pending")!)
+                
+                if let json = jsonOptional as AnyObject? as Dictionary<String, AnyObject>? {
+                    if let state:String = json["state"] as AnyObject? as String? {
+                        completion(status: CommitStatus(rawValue:state)!)
+                    }
+                }
         }
     }
     
