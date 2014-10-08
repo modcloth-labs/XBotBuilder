@@ -16,6 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var botServerConfig = BotServerConfig()
     var githubConfig = GithubConfig()
+    var projectConfig = ProjectConfig()
     
     var botServer: XBot.Server!
     var botSync: GitHubXBotSync!
@@ -82,6 +83,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         self.githubAPIToken.stringValue = self.githubConfig.apiToken
         self.githubProjectIdentifier.stringValue = self.githubConfig.projectIdentifier
+        
+        self.projectNameOrWorkspace.stringValue = self.projectConfig.nameOrWorkspace
+        self.projectSchemeName.stringValue = self.projectConfig.schemeName
+        self.projectPrivateKey.stringValue = self.projectConfig.privateKey
+        self.projectPublicKey.stringValue = self.projectConfig.publicKey
+        self.projectTestDeviceId.stringValue = self.projectConfig.testDeviceId
+        self.projectTestBuild.state = self.projectConfig.testBuild ? NSOnState : NSOffState
+        self.projectAnalyzeBuild.state = self.projectConfig.analyzeBuild ? NSOnState : NSOffState
+        self.projectArchiveBuild.state = self.projectConfig.archiveBuild ? NSOnState : NSOffState
     }
 
     func pollForUpdates() {
