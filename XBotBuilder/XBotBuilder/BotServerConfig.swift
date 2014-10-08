@@ -17,11 +17,17 @@ class BotServerConfig {
         get {
             return "10.0.0.1"
         }
+        set {
+            
+        }
     }
     
     var user: String {
         get {
             return "user"
+        }
+        set {
+            
         }
     }
     
@@ -29,11 +35,17 @@ class BotServerConfig {
         get {
             return "password"
         }
+        set {
+            
+        }
     }
     
     var port: String {
         get {
             return "7000"
+        }
+        set {
+            
         }
     }
 }
