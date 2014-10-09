@@ -33,6 +33,7 @@ class GitHubXBotSync {
         createXBots(botPRPairs)
         syncXBots(botPRPairs)
         //TODO: "Retest"
+        //TODO: add new commit
         
     }
     
@@ -57,11 +58,14 @@ class GitHubXBotSync {
         
         waitUntil(finishedBoth, 10)
         
-        //combine prs and bots
+        return combinePrs(prs, withBots:bots)
+    }
+
+    private func combinePrs(prs:[GitHubPullRequest], withBots bots:[Bot]) -> ([BotPRPair]) {
         var botPRPairs:[BotPRPair] = []
         for pr in prs {
             if pr.sha == nil || pr.branch == nil || pr.title == nil {continue}
-            
+
             var pair = BotPRPair(bot:nil, pr:pr)
             let matchingBots = bots.filter{ $0.name == pr.xBotTitle }
             if let matchedBot = matchingBots.first {
@@ -70,7 +74,7 @@ class GitHubXBotSync {
 
             botPRPairs.append(pair)
         }
-        
+
         for bot in bots {
             let matchingPairs = botPRPairs.filter{ if let existingName = $0.bot?.name { return existingName == bot.name } else { return false} }
             if matchingPairs.count == 0 {
@@ -80,7 +84,7 @@ class GitHubXBotSync {
         }
         return botPRPairs
     }
-    
+
     private func deleteXBots(gitXBotInfos:[BotPRPair]){
         let botsToDelete = gitXBotInfos.filter{$0.pr == nil}
         for botToDelete in botsToDelete {
@@ -137,15 +141,18 @@ class GitHubXBotSync {
             bot.fetchLatestIntegration{ (latestIntegration) in
                 if let latestIntegration = latestIntegration {
                     println("Syncing Status: \(bot.name) \(latestIntegration.currentStep) \(latestIntegration.result)")
-                    println(latestIntegration.summaryString)
-                    println()
                     let expectedStatus = CommitStatus.fromXBotStatusText(latestIntegration.result)
-                    self.gitHubRepo.getStatus(pr.sha!){ (currentStatus) -> () in
+                    self.gitHubRepo.getStatus(pr.sha!){ (currentStatus) in
                         if expectedStatus != currentStatus {
                             println("Updating status of \(bot.name) to \(expectedStatus.rawValue)")
                             self.gitHubRepo.setStatus(expectedStatus, sha: pr.sha!){
-                                //TODO
+                                self.gitHubRepo.addComment(pr.number!, text:latestIntegration.summaryString) {
+                                    println("added comment")
+                                    println(latestIntegration.summaryString)
+                                }
                             }
+                        } else {
+                            println("Status unchanged: \(expectedStatus.rawValue)")
                         }
                     }
                     

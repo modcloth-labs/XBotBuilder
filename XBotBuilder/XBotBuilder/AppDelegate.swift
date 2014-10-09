@@ -59,11 +59,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
         
         //NOTE:
-        // A file named "DoNotCheckIn.swift" with "githubToken", "publicKey" and "privateKey" is expected
-        //TODO: Replace this with the config from botServerConfig
+        // A file named "DoNotCheckIn.swift" with xbot_host, xbot_user, xbot_password, githubToken, publicKey and privateKey is expected
         self.botServer = XBot.Server(host:self.botServerConfig.host,
             user:self.botServerConfig.user,
             password:self.botServerConfig.password)
+
+//        self.botServer = XBot.Server(host:xbot_host,
+//            user:xbot_user,
+//            password:xbot_password)
+
         self.botSync = GitHubXBotSync(
             botServer: self.botServer,
             gitHubRepo: self.gitHubRepo,
@@ -122,7 +126,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func pollForUpdates() {
         var currentTime = NSDate()
-//        self.botSync.sync()
+        self.botSync.sync()
         self.lastPollTime = currentTime
         self.updateMenu()
     }

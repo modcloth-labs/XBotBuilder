@@ -68,8 +68,20 @@ class GitHubRepo {
                 }
         }
     }
-    
-    func getGitHubRequest(method:String, url:String, bodyDictionary:AnyObject? = nil) -> NSMutableURLRequest {
+
+    func addComment(pullRequestNumber:NSNumber, text:String, completion:() -> ()) {
+        let params = ["body":text]
+        let postCommentURL = "/repos/\(self.repoName)/issues/\(pullRequestNumber)/comments"
+        var postCommentRequest = getGitHubRequest("POST", url: postCommentURL, bodyDictionary: params)
+
+        Alamofire.request(postCommentRequest)
+            .responseJSON { (request, response, jsonOptional, error) in
+                completion()
+        }
+    }
+
+    //MARK: - private
+    private func getGitHubRequest(method:String, url:String, bodyDictionary:AnyObject? = nil) -> NSMutableURLRequest {
         var request = NSMutableURLRequest(URL: NSURL(string: "\(server)\(url)")!)
         request.setValue("token \(self.token)", forHTTPHeaderField:"Authorization")
         request.HTTPMethod = method
