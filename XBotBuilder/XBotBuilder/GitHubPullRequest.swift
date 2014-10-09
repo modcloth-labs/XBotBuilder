@@ -18,6 +18,10 @@ enum CommitStatus : String {
     static func fromXBotStatusText(xBotStatusText:String) -> (CommitStatus) {
         if xBotStatusText == "test-failures" {
             return .Failure
+        } else if xBotStatusText == "warnings" {
+            return .Failure
+        } else if xBotStatusText == "analyzer-warnings" {
+            return .Failure
         } else if xBotStatusText == "build-errors" {
             return .Error
         } else if xBotStatusText == "succeeded" {

@@ -71,7 +71,7 @@ class ProjectConfig {
     
     var analyzeBuild: Bool {
         get {
-            return false;
+            return true;
         }
         set {
             
