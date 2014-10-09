@@ -20,9 +20,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     var botServer: XBot.Server!
     var botSync: GitHubXBotSync!
+    var gitHubRepo: GitHubRepo!
+    var template: BotConfigTemplate!
     
-    //TODO: Replace with information from githubConfig
-    let gitHubRepo = GitHubRepo(token: githubToken, repoName: "modcloth-labs/MCRotatingCarousel")
     var statusItem: NSStatusItem!
     var lastPollTime: NSDate!
     var lastPollMenuItem: NSMenuItem!
@@ -44,26 +44,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var githubAPIToken: NSTextField!
     @IBOutlet weak var githubProjectIdentifier: NSTextField!
     
-    //TODO: Replace this with the config from projectConfig
-    let template = BotConfigTemplate(
-        projectOrWorkspace:"MCRotatingCarouselExample/MCRotatingCarouselExample.xcodeproj",
-        schemeName:"MCRotatingCarouselExample",
-        publicKey:publicKey,
-        privateKey:privateKey,
-        deviceIds:["eb5383447a7bfedad16f6cd86300aaa2"],
-        performsTestAction:true,
-        performsAnalyzeAction:true,
-        performsArchiveAction:false
-        )
-    
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
-        
-        //NOTE:
-        // A file named "DoNotCheckIn.swift" with "githubToken", "publicKey" and "privateKey" is expected
-        //TODO: Replace this with the config from botServerConfig
+        self.template = BotConfigTemplate(
+                projectOrWorkspace:self.projectConfig.nameOrWorkspace,
+                schemeName:self.projectConfig.schemeName,
+                publicKey: self.projectConfig.publicKey,
+                privateKey:self.projectConfig.privateKey,
+                deviceIds:[self.projectConfig.testDeviceId],
+                performsTestAction:self.projectConfig.testBuild,
+                performsAnalyzeAction:self.projectConfig.analyzeBuild,
+                performsArchiveAction:self.projectConfig.archiveBuild
+        )
         self.botServer = XBot.Server(host:self.botServerConfig.host,
             user:self.botServerConfig.user,
             password:self.botServerConfig.password)
+        self.gitHubRepo = GitHubRepo(token: self.githubConfig.apiToken,
+            repoName: self.githubConfig.projectIdentifier)
         self.botSync = GitHubXBotSync(
             botServer: self.botServer,
             gitHubRepo: self.gitHubRepo,
@@ -75,7 +71,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.pollForUpdates()
         var timer = NSTimer.scheduledTimerWithTimeInterval(180, target: self, selector: Selector("pollForUpdates"), userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-
     }
     
     func updateOutletsFromConfig() {
