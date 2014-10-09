@@ -21,6 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var botServer: XBot.Server!
     var botSync: GitHubXBotSync!
     
+    //TODO: Replace with information from githubConfig
     let gitHubRepo = GitHubRepo(token: githubToken, repoName: "modcloth-labs/MCRotatingCarousel")
     var statusItem: NSStatusItem!
     var lastPollTime: NSDate!
@@ -43,6 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var githubAPIToken: NSTextField!
     @IBOutlet weak var githubProjectIdentifier: NSTextField!
     
+    //TODO: Replace this with the config from projectConfig
     let template = BotConfigTemplate(
         projectOrWorkspace:"MCRotatingCarouselExample/MCRotatingCarouselExample.xcodeproj",
         schemeName:"MCRotatingCarouselExample",
@@ -58,6 +60,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         //NOTE:
         // A file named "DoNotCheckIn.swift" with "githubToken", "publicKey" and "privateKey" is expected
+        //TODO: Replace this with the config from botServerConfig
         self.botServer = XBot.Server(host:self.botServerConfig.host,
             user:self.botServerConfig.user,
             password:self.botServerConfig.password)
@@ -145,11 +148,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItemWithTitle("Quit XBot", action: "terminate:", keyEquivalent: "")
         self.statusItem.menu = menu
     }
-
-    func applicationWillTerminate(aNotification: NSNotification?) {
-        // Insert code here to tear down your application
-    }
-
-    
 }
 
