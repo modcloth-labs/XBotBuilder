@@ -17,12 +17,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var botServerConfig = BotServerConfig()
     var githubConfig = GithubConfig()
     var projectConfig = ProjectConfig()
-    
-    var botServer: XBot.Server!
+
     var botSync: GitHubXBotSync!
-    var gitHubRepo: GitHubRepo!
-    var template: BotConfigTemplate!
-    
     var statusItem: NSStatusItem!
     var lastPollTime: NSDate!
     var lastPollMenuItem: NSMenuItem!
@@ -45,25 +41,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var githubProjectIdentifier: NSTextField!
     
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
-        self.template = BotConfigTemplate(
-                projectOrWorkspace:self.projectConfig.nameOrWorkspace,
-                schemeName:self.projectConfig.schemeName,
-                publicKey: self.projectConfig.publicKey,
-                privateKey:self.projectConfig.privateKey,
-                deviceIds:[self.projectConfig.testDeviceId],
-                performsTestAction:self.projectConfig.testBuild,
-                performsAnalyzeAction:self.projectConfig.analyzeBuild,
-                performsArchiveAction:self.projectConfig.archiveBuild
-        )
-        self.botServer = XBot.Server(host:self.botServerConfig.host,
+
+        var gitHubRepo = GitHubRepo(
+            token: githubConfig.apiToken,
+            repoName: githubConfig.projectIdentifier)
+
+        var botServer = XBot.Server(
+            host:self.botServerConfig.host,
             user:self.botServerConfig.user,
             password:self.botServerConfig.password)
-        self.gitHubRepo = GitHubRepo(token: self.githubConfig.apiToken,
-            repoName: self.githubConfig.projectIdentifier)
+
+        var template = BotConfigTemplate(
+            projectOrWorkspace:projectConfig.nameOrWorkspace,
+            schemeName:projectConfig.schemeName,
+            publicKey:projectConfig.publicKey,
+            privateKey:projectConfig.privateKey,
+            deviceIds:[projectConfig.testDeviceId],
+            performsTestAction:projectConfig.testBuild,
+            performsAnalyzeAction:projectConfig.analyzeBuild,
+            performsArchiveAction:projectConfig.archiveBuild
+        )
+
         self.botSync = GitHubXBotSync(
-            botServer: self.botServer,
-            gitHubRepo: self.gitHubRepo,
-            botConfigTemplate: self.template)
+            botServer: botServer,
+            gitHubRepo: gitHubRepo,
+            botConfigTemplate: template)
         
         self.updateOutletsFromConfig()
         
