@@ -27,40 +27,67 @@ class GitHubXBotSync {
     }
     
     func sync(completion:(error:NSError?) -> ()) {
-        let botPRPairs = getBotPRPairs()
 
-        deleteXBots(botPRPairs)
-        createXBots(botPRPairs)
-        syncXBots(botPRPairs)
+        let (botPRPairs, error) = getBotPRPairs()
+        if let error = error {
+            completion(error:error)
+            return
+        }
+
+        if let error = deleteXBots(botPRPairs) {
+            completion(error:error)
+            return
+        }
+
+        if let error = createXBots(botPRPairs) {
+            completion(error:error)
+            return
+        }
+
+
+        if let error = syncXBots(botPRPairs) {
+            completion(error:error)
+            return
+        }
+
         //TODO: "Retest"
         //TODO: add new commit
 
-        //TODO: waitforcompletion
         completion(error: nil)
     }
     
     //MARK: Private
-    private func getBotPRPairs() -> ([BotPRPair]) {
+    private func getBotPRPairs() -> ([BotPRPair],NSError?) {
         var prs:[GitHubPullRequest] = []
         var bots:[Bot] = []
-        
+        var error:NSError? = nil
+
         var prFinished = false
         var botFinished = false
         var finishedBoth:() -> (Bool) = { return prFinished && botFinished }
         
-        gitHubRepo.fetchPullRequests { (fetchedPRs)  in
+        gitHubRepo.fetchPullRequests { (fetchedPRs, fetchError)  in
             prs = fetchedPRs
+            error = fetchError
             prFinished = true
         }
         
         botServer.fetchBots({ (fetchedBots) in
             bots = fetchedBots
+            //TODO: return error?
             botFinished = true
         })
         
-        waitUntil(finishedBoth, 10)
-        
-        return combinePrs(prs, withBots:bots)
+        if waitForTimeout(10, finishedBoth) {
+            var whatFailed = prFinished ? "bots" : "github"
+            var errorMessage = "Timeout waiting for \(whatFailed)"
+
+            error = NSError(domain:"GitHubXBotSyncDomain",
+                code:10001,
+                userInfo:[NSLocalizedDescriptionKey:errorMessage])
+        }
+
+        return (combinePrs(prs, withBots:bots), error)
     }
 
     private func combinePrs(prs:[GitHubPullRequest], withBots bots:[Bot]) -> ([BotPRPair]) {
@@ -87,18 +114,46 @@ class GitHubXBotSync {
         return botPRPairs
     }
 
-    private func deleteXBots(gitXBotInfos:[BotPRPair]){
+    private func deleteXBots(gitXBotInfos:[BotPRPair]) -> (NSError?){
         let botsToDelete = gitXBotInfos.filter{$0.pr == nil}
+        var error:NSError?
+
         for botToDelete in botsToDelete {
+            var finished = false
             println("Deleting bot \(botToDelete.bot?.name)")
-            botToDelete.bot?.delete{ (success) in }
+            botToDelete.bot?.delete{ (success) in
+                if !success {
+                    var errorMessage = "Unable to delete bot \(botToDelete.bot?.name)"
+
+                    error = NSError(domain:"GitHubXBotSyncDomain",
+                        code:10001,
+                        userInfo:[NSLocalizedDescriptionKey:errorMessage])
+
+                }
+
+                finished = true
+            }
+
+            if waitForTimeout(10, &finished) {
+                var errorMessage = "Timeout waiting to delete bot \(botToDelete.bot?.name)"
+
+                error = NSError(domain:"GitHubXBotSyncDomain",
+                    code:10001,
+                    userInfo:[NSLocalizedDescriptionKey:errorMessage])
+            }
+
+            if let error = error {return error}
         }
+        return error
     }
     
     //go through each PR, create XBot (and start integration) if not present
-    private func createXBots(gitXBotInfos:[BotPRPair]) {
+    private func createXBots(gitXBotInfos:[BotPRPair]) -> (NSError?) {
         let botsToCreate = gitXBotInfos.filter{$0.bot == nil}
+        var error:NSError?
+
         for botToCreate in botsToCreate {
+            var finished = false
             println("Creating bot from PR: \(botToCreate.pr?.xBotTitle)")
             
             var botConfig = XBot.BotConfiguration(
@@ -119,27 +174,46 @@ class GitHubXBotSync {
             botServer.createBot(botConfig){ (success, bot) in
                 let status = success ? "COMPLETED" : "FAILED"
                 println("\(bot?.name) (\(bot?.id)) creation \(status)")
-                
-                bot?.integrate { (success, integration) in
-                    let status = success ? integration?.currentStep ?? "NO INTEGRATION STEP" : "FAILED"
-                    println("\(bot?.name) (\(bot?.id)) integration - \(status)")
-                    
-                    self.gitHubRepo.setStatus(.Pending, sha: botToCreate.pr!.sha!){ () -> () in
-                        //TODO
+
+                if success {
+                    bot?.integrate { (success, integration) in
+                        let status = success ? integration?.currentStep ?? "NO INTEGRATION STEP" : "FAILED"
+                        println("\(bot?.name) (\(bot?.id)) integration - \(status)")
+                        self.gitHubRepo.setStatus(.Pending, sha: botToCreate.pr!.sha!){ }
                     }
-                    
+                } else {
+                    var errorMessage = "Unable to create bot \(botToCreate.bot?.name)"
+
+                    error = NSError(domain:"GitHubXBotSyncDomain",
+                        code:10001,
+                        userInfo:[NSLocalizedDescriptionKey:errorMessage])
                 }
+                finished = true
             }
+
+            if waitForTimeout(10, &finished) {
+                var errorMessage = "Timeout waiting to create bot \(botToCreate.bot?.name)"
+
+                error = NSError(domain:"GitHubXBotSyncDomain",
+                    code:10001,
+                    userInfo:[NSLocalizedDescriptionKey:errorMessage])
+            }
+
+            if let error = error {return error}
         }
+
+        return error
     }
     
     //go through each XBot, update PR status as required
-    private func syncXBots(gitXBotInfos:[BotPRPair]) {
+    private func syncXBots(gitXBotInfos:[BotPRPair]) -> (NSError?) {
         let botsToSync = gitXBotInfos.filter{$0.bot != nil && $0.pr != nil}
-        
+        var error:NSError?
+
         for botToSync in botsToSync {
             let bot = botToSync.bot!
             let pr = botToSync.pr!
+            var finished = false
             bot.fetchLatestIntegration{ (latestIntegration) in
                 if let latestIntegration = latestIntegration {
                     println("Syncing Status: \(bot.name) \(latestIntegration.currentStep) \(latestIntegration.result)")
@@ -159,8 +233,20 @@ class GitHubXBotSync {
                     }
                     
                 }
+                finished = true
             }
+
+            if waitForTimeout(10, &finished) {
+                var errorMessage = "Timeout waiting to get bot status \(bot.name)"
+
+                error = NSError(domain:"GitHubXBotSyncDomain",
+                    code:10001,
+                    userInfo:[NSLocalizedDescriptionKey:errorMessage])
+            }
+
+            if let error = error {return error}
         }
+        return error
     }
     
 }

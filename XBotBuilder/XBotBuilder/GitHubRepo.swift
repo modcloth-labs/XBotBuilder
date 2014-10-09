@@ -22,20 +22,28 @@ class GitHubRepo {
     }
     
     
-    func fetchPullRequests(completion:([GitHubPullRequest]) -> ())
+    func fetchPullRequests(completion:([GitHubPullRequest], NSError?) -> ())
     {
         var prRequest = getGitHubRequest("GET", url: "/repos/\(self.repoName)/pulls")
         
         Alamofire.request(prRequest)
             .responseJSON { (request, response, jsonOptional, error) in
                 var pullRequests:[GitHubPullRequest] = []
-                if let prs = jsonOptional as AnyObject? as? [Dictionary<String, AnyObject>]{
+                var myError = error
+                if response?.statusCode == 404 {
+                    var errorMessage = "Unable to access repo"
+
+                    myError = NSError(domain:"GitHubXBotSyncDomain",
+                        code:10001,
+                        userInfo:[NSLocalizedDescriptionKey:errorMessage])
+                } else if let prs = jsonOptional as AnyObject? as? [Dictionary<String, AnyObject>]{
                     for pr in prs {
                         var pullRequest = GitHubPullRequest(gitHubDictionary: pr)
                         pullRequests.append(pullRequest)
                     }
                 }
-                completion(pullRequests)
+
+                completion(pullRequests, myError)
         }
 
     }
