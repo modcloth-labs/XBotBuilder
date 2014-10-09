@@ -41,16 +41,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var githubProjectIdentifier: NSTextField!
     
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
-
+        self.configureModelsFromPersistence()
+        self.updateOutletsFromConfig()
+        
+        self.configureAndShowMenuBarItem()
+        self.pollForUpdates()
+        var timer = NSTimer.scheduledTimerWithTimeInterval(180, target: self, selector: Selector("pollForUpdates"), userInfo: nil, repeats: true)
+        NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+    }
+    
+    func configureModelsFromPersistence() {
         var gitHubRepo = GitHubRepo(
             token: githubConfig.apiToken,
             repoName: githubConfig.projectIdentifier)
-
+        
         var botServer = XBot.Server(
             host:self.botServerConfig.host,
             user:self.botServerConfig.user,
             password:self.botServerConfig.password)
-
+        
         var template = BotConfigTemplate(
             projectOrWorkspace:projectConfig.nameOrWorkspace,
             schemeName:projectConfig.schemeName,
@@ -61,18 +70,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             performsAnalyzeAction:projectConfig.analyzeBuild,
             performsArchiveAction:projectConfig.archiveBuild
         )
-
+        
         self.botSync = GitHubXBotSync(
             botServer: botServer,
             gitHubRepo: gitHubRepo,
             botConfigTemplate: template)
-        
-        self.updateOutletsFromConfig()
-        
-        self.configureAndShowMenuBarItem()
-        self.pollForUpdates()
-        var timer = NSTimer.scheduledTimerWithTimeInterval(180, target: self, selector: Selector("pollForUpdates"), userInfo: nil, repeats: true)
-        NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
     }
     
     func updateOutletsFromConfig() {
@@ -115,6 +117,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     override func controlTextDidChange(notification: NSNotification) {
         self.persistFromOutlets()
+        self.configureModelsFromPersistence()
     }
 
     func pollForUpdates() {
