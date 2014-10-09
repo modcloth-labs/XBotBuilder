@@ -216,10 +216,18 @@ class GitHubXBotSync {
             var finished = false
             bot.fetchLatestIntegration{ (latestIntegration) in
                 if let latestIntegration = latestIntegration {
-                    println("Syncing Status: \(bot.name) \(latestIntegration.currentStep) \(latestIntegration.result)")
+                    println("Syncing Status: \(bot.name) #\(latestIntegration.number) \(latestIntegration.currentStep) \(latestIntegration.result)")
                     let expectedStatus = CommitStatus.fromXBotStatusText(latestIntegration.result)
                     self.gitHubRepo.getStatus(pr.sha!){ (currentStatus) in
-                        if expectedStatus != currentStatus {
+                        if currentStatus == .NoStatus {
+
+                            bot.integrate { (success, integration) in
+                                let status = success ? integration?.currentStep ?? "NO INTEGRATION STEP" : "FAILED"
+                                println("\(bot.name) integration for sha \(pr.sha!) - \(status)")
+                                self.gitHubRepo.setStatus(.Pending, sha: pr.sha!){ }
+                            }
+
+                        } else if expectedStatus != currentStatus {
                             println("Updating status of \(bot.name) to \(expectedStatus.rawValue)")
                             self.gitHubRepo.setStatus(expectedStatus, sha: pr.sha!){
                                 self.gitHubRepo.addComment(pr.number!, text:latestIntegration.summaryString) {
@@ -230,10 +238,12 @@ class GitHubXBotSync {
                         } else {
                             println("Status unchanged: \(expectedStatus.rawValue)")
                         }
+                        finished = true
                     }
                     
+                } else {
+                    finished = true
                 }
-                finished = true
             }
 
             if waitForTimeout(10, &finished) {

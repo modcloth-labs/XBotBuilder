@@ -66,14 +66,17 @@ class GitHubRepo {
         var getStatusRequest = getGitHubRequest("GET", url: getStatusURL)
         Alamofire.request(getStatusRequest)
             .responseJSON { (request, response, jsonOptional, error) in
+                var commitStatus:CommitStatus = .NoStatus
 
                 if let json = jsonOptional as AnyObject? as [Dictionary<String, AnyObject>]? {
                     if let firstStatus = json.first?{
                         if let state:String = firstStatus["state"] as AnyObject? as String? {
-                            completion(status: CommitStatus(rawValue:state)!)
+                            commitStatus = CommitStatus(rawValue:state)!
                         }
                     }
                 }
+                completion(status: commitStatus)
+
         }
     }
 
