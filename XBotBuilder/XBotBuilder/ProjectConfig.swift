@@ -9,52 +9,54 @@
 import Foundation
 
 class ProjectConfig {
-    init() {
-        
+    var defaults : NSUserDefaults!
+    
+    init(){
+        self.defaults = NSUserDefaults.standardUserDefaults()
     }
     
     var nameOrWorkspace: String {
         get {
-            return "workspace-100"
+            return fetchFromDefaults("nameOrWorkspace")
         }
-        set {
-            
+        set(value) {
+            persistToDefaults("nameOrWorkspace", value:value)
         }
     }
     
     var schemeName: String {
         get {
-            return "schemeName"
+            return fetchFromDefaults("schemeName")
         }
-        set {
-            
+        set(value) {
+            persistToDefaults("schemeName", value:value)
         }
     }
     
     var privateKey: String {
         get {
-            return "super secret private key"
+            return fetchFromDefaults("privateKey")
         }
-        set {
-            
+        set(value) {
+            persistToDefaults("privateKey", value:value)
         }
     }
     
     var publicKey: String {
         get {
-            return "give this to anyone- public key"
+            return fetchFromDefaults("publicKey")
         }
-        set {
-            
+        set(value) {
+            persistToDefaults("publicKey", value:value)
         }
     }
     
     var testDeviceId: String {
         get {
-            return "AABBCC-1111"
+            return fetchFromDefaults("testDeviceId")
         }
-        set {
-            
+        set(value) {
+            persistToDefaults("testDeviceId", value:value)
         }
     }
     
@@ -83,5 +85,19 @@ class ProjectConfig {
         set {
             
         }
+    }
+    
+    func namespacedKey(key:String) -> String{
+        var botId = 1
+        return "github/\(botId)/\(key)"
+    }
+    
+    func fetchFromDefaults(key:String) -> String! {
+        return self.defaults.objectForKey(namespacedKey(key)) as AnyObject! as NSString! ?? ""
+    }
+    
+    func persistToDefaults(key:String, value:String) {
+        self.defaults.setObject(value, forKey: namespacedKey(key))
+        self.defaults.synchronize()
     }
 }
