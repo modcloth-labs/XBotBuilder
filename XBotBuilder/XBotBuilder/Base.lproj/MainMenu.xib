@@ -811,6 +811,9 @@
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="Voe-Tx-rLC" id="4XG-sj-nsg"/>
+                                            </connections>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bf7-Vg-FDG">
                                             <rect key="frame" x="218" y="270" width="271" height="22"/>
@@ -819,6 +822,9 @@
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="Voe-Tx-rLC" id="etg-pk-xfh"/>
+                                            </connections>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVl-Fd-V44">
                                             <rect key="frame" x="218" y="100" width="271" height="22"/>
@@ -827,6 +833,9 @@
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="Voe-Tx-rLC" id="e4z-dT-0MP"/>
+                                            </connections>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Frn-Yx-WyG">
                                             <rect key="frame" x="218" y="200" width="271" height="62"/>
@@ -835,6 +844,9 @@
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="Voe-Tx-rLC" id="Lh6-4C-8hi"/>
+                                            </connections>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ovo-6n-2K9">
                                             <rect key="frame" x="218" y="130" width="271" height="62"/>
@@ -843,6 +855,9 @@
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="Voe-Tx-rLC" id="hbi-Ma-orN"/>
+                                            </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DJJ-iJ-AtZ">
                                             <rect key="frame" x="15" y="275" width="93" height="17"/>
@@ -886,21 +901,21 @@
                                         </textField>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6vD-Be-Trp">
                                             <rect key="frame" x="216" y="65" width="83" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Test Build" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="SBz-Rv-Pwv">
+                                            <buttonCell key="cell" type="check" title="Test Build" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="SBz-Rv-Pwv">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9du-ZU-tzb">
                                             <rect key="frame" x="216" y="38" width="107" height="25"/>
-                                            <buttonCell key="cell" type="check" title="Analyze Build" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Udr-vr-aJL">
+                                            <buttonCell key="cell" type="check" title="Analyze Build" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="Udr-vr-aJL">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WTU-YQ-KVh">
                                             <rect key="frame" x="216" y="15" width="116" height="23"/>
-                                            <buttonCell key="cell" type="check" title="Archive Build" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="U2H-pC-IZI">
+                                            <buttonCell key="cell" type="check" title="Archive Build" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="U2H-pC-IZI">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -928,6 +943,9 @@
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="Voe-Tx-rLC" id="8cj-rL-DMP"/>
+                                            </connections>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="biY-gp-WzU">
                                             <rect key="frame" x="88" y="280" width="331" height="22"/>
@@ -936,6 +954,9 @@
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="Voe-Tx-rLC" id="Fz0-Wy-hDO"/>
+                                            </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D7u-bR-r4e">
                                             <rect key="frame" x="197" y="305" width="113" height="17"/>
