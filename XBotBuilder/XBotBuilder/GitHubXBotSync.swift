@@ -26,7 +26,7 @@ class GitHubXBotSync {
         self.botConfigTemplate = botConfigTemplate
     }
     
-    func sync() {
+    func sync(completion:(error:NSError?) -> ()) {
         let botPRPairs = getBotPRPairs()
 
         deleteXBots(botPRPairs)
@@ -34,7 +34,9 @@ class GitHubXBotSync {
         syncXBots(botPRPairs)
         //TODO: "Retest"
         //TODO: add new commit
-        
+
+        //TODO: waitforcompletion
+        completion(error: nil)
     }
     
     //MARK: Private

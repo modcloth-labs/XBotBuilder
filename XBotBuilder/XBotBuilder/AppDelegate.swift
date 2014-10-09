@@ -122,7 +122,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func pollForUpdates() {
         var currentTime = NSDate()
-        self.botSync.sync()
+        self.botSync.sync{ (error) in
+            if let error = error {
+                let errorMessage = error.localizedDescription
+                println("Sync error: \(errorMessage)")
+            } else {
+                println("Sync Successful")
+            }
+        }
         self.lastPollTime = currentTime
         self.updateMenu()
     }
