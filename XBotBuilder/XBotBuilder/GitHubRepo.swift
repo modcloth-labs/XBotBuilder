@@ -91,6 +91,23 @@ class GitHubRepo {
         }
     }
 
+    func getComments(pullRequestNumber:NSNumber, completion:(commentStrings:[String]) -> ()) {
+        let getCommentURL = "/repos/\(self.repoName)/issues/\(pullRequestNumber)/comments"
+        var getCommentRequest = getGitHubRequest("GET", url: getCommentURL)
+
+        Alamofire.request(getCommentRequest)
+            .responseJSON { (request, response, jsonOptional, error) in
+                var comments:[String] = []
+                if let commentsJson = jsonOptional as AnyObject? as? [Dictionary<String,AnyObject>]{
+                    for commentJson in commentsJson {
+                        comments.append(commentJson["body"]! as String)
+                    }
+                }
+                completion(commentStrings: comments)
+        }
+    }
+
+
     //MARK: - private
     private func getGitHubRequest(method:String, url:String, bodyDictionary:AnyObject? = nil) -> NSMutableURLRequest {
         var request = NSMutableURLRequest(URL: NSURL(string: "\(server)\(url)")!)

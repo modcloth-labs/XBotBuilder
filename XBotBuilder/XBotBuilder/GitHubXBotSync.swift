@@ -237,6 +237,19 @@ class GitHubXBotSync {
                             }
                         } else {
                             println("Status unchanged: \(expectedStatus.rawValue)")
+
+                            if currentStatus != .Pending {
+                                self.gitHubRepo.getComments(pr.number!){(comments) in
+                                    if comments.last?.lowercaseString.rangeOfString("retest") != nil {
+                                        bot.integrate { (success, integration) in
+                                            let status = success ? integration?.currentStep ?? "NO INTEGRATION STEP" : "FAILED"
+                                            println("\(bot.name) integration for sha \(pr.sha!) - \(status)")
+                                            self.gitHubRepo.setStatus(.Pending, sha: pr.sha!){ }
+                                        }
+                                    }
+                                }
+                            }
+
                         }
                         finished = true
                     }
