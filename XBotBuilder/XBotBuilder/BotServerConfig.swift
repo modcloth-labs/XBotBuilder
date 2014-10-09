@@ -9,43 +9,59 @@
 import Foundation
 
 class BotServerConfig {
+    var defaults : NSUserDefaults!
+    
     init(){
-        
+        self.defaults = NSUserDefaults.standardUserDefaults()
     }
     
     var host: String {
         get {
-            return "10.0.0.1"
+            return fetchFromDefaults("host")
         }
-        set {
-            
+        set(value) {
+            persistToDefaults("host", value:value)
         }
     }
     
     var user: String {
         get {
-            return "user"
+            return fetchFromDefaults("user")
         }
-        set {
-            
+        set(value) {
+            persistToDefaults("user", value:value)
         }
     }
     
     var password: String {
         get {
-            return "password"
+            return fetchFromDefaults("password")
         }
-        set {
-            
+        set(value) {
+            persistToDefaults("password", value:value)
         }
     }
     
     var port: String {
         get {
-            return "7000"
+            return fetchFromDefaults("port")
         }
-        set {
-            
+        set(value) {
+            persistToDefaults("port", value:value)
         }
+    }
+    
+    func namespacedKey(key:String) -> String{
+        var id = 1
+        return "server/\(id)/\(key)"
+    }
+    
+    func fetchFromDefaults(key:String) -> String! {
+        return self.defaults.objectForKey(namespacedKey(key)) as AnyObject! as NSString! ?? ""
+    }
+    
+    func persistToDefaults(key:String, value:String) {
+        self.defaults.setObject(value, forKey: namespacedKey(key))
+        self.defaults.synchronize()
     }
 }
