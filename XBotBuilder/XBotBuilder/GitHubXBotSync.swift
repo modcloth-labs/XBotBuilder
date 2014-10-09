@@ -50,9 +50,6 @@ class GitHubXBotSync {
             return
         }
 
-        //TODO: "Retest"
-        //TODO: add new commit
-
         completion(error: nil)
     }
     
@@ -73,7 +70,7 @@ class GitHubXBotSync {
         }
         
         botServer.fetchBots({ (fetchedBots) in
-            bots = fetchedBots
+            bots = fetchedBots.filter{$0.name.hasPrefix(GitHubPullRequest.xBotTitlePrefix())}
             //TODO: return error?
             botFinished = true
         })
@@ -115,7 +112,7 @@ class GitHubXBotSync {
     }
 
     private func deleteXBots(gitXBotInfos:[BotPRPair]) -> (NSError?){
-        let botsToDelete = gitXBotInfos.filter{$0.pr == nil}
+        let botsToDelete = gitXBotInfos.filter{ $0.pr == nil}
         var error:NSError?
 
         for botToDelete in botsToDelete {

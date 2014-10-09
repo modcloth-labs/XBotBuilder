@@ -42,10 +42,14 @@ class GitHubPullRequest {
     var sha:String?
     var number:NSNumber?
     var title:String?
-    
+
+    class func xBotTitlePrefix() -> (String) {
+        return "XBot"
+    }
+
     var xBotTitle:String {
         get {
-            return "XBot PR#\(number!) - \(title!)"
+            return "\(GitHubPullRequest.xBotTitlePrefix()) PR#\(number!) - \(title!)"
         }
     }
     
