@@ -113,6 +113,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.projectConfig.archiveBuild = self.projectArchiveBuild.state  == NSOnState
     }
 
+    override func controlTextDidChange(notification: NSNotification) {
+        self.persistFromOutlets()
+    }
+
     func pollForUpdates() {
         var currentTime = NSDate()
 //        self.botSync.sync()

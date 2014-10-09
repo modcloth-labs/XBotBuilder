@@ -713,7 +713,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="XCode Server" identifier="1" id="9My-Fz-cpN">
-                                <view key="view" id="AQT-pd-SyO">
+                                <view key="view" ambiguous="YES" id="AQT-pd-SyO">
                                     <rect key="frame" x="10" y="33" width="506" height="325"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -732,6 +732,9 @@
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="Voe-Tx-rLC" id="yE1-ma-UNB"/>
+                                            </connections>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9sI-AM-6tO">
                                             <rect key="frame" x="218" y="268" width="271" height="22"/>
@@ -740,6 +743,9 @@
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="Voe-Tx-rLC" id="zNo-GH-2zh"/>
+                                            </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S9J-N7-N03">
                                             <rect key="frame" x="15" y="241" width="67" height="17"/>
@@ -764,6 +770,9 @@
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="Voe-Tx-rLC" id="AYe-A8-g2a"/>
+                                            </connections>
                                         </textField>
                                         <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J9K-dh-iD8">
                                             <rect key="frame" x="218" y="206" width="271" height="22"/>
@@ -775,6 +784,9 @@
                                                     <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                                 </allowedInputSourceLocales>
                                             </secureTextFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="Voe-Tx-rLC" id="i1e-ES-de4"/>
+                                            </connections>
                                         </secureTextField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5vp-HH-JtW">
                                             <rect key="frame" x="15" y="303" width="54" height="17"/>
@@ -788,7 +800,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Project" identifier="2" id="p1L-5g-gco">
-                                <view key="view" ambiguous="YES" id="F6o-tO-FAy">
+                                <view key="view" id="F6o-tO-FAy">
                                     <rect key="frame" x="10" y="33" width="506" height="325"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -940,6 +952,9 @@
                     </tabView>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="delegate" destination="Voe-Tx-rLC" id="sYN-wN-Tjo"/>
+            </connections>
             <point key="canvasLocation" x="175" y="141"/>
         </window>
     </objects>
