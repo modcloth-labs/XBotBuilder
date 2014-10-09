@@ -54,6 +54,14 @@ class GitHubXBotSync {
     }
     
     //MARK: Private
+    private func xBotNamePrefix() -> (String) {
+        return "Xbot \(self.gitHubRepo.repoName)"
+    }
+
+    private func xBotNameForPR(pr:GitHubPullRequest) -> (String) {
+        return "\(self.xBotNamePrefix()) PR#\(pr.number!) - \(pr.title!)"
+    }
+
     private func getBotPRPairs() -> ([BotPRPair],NSError?) {
         var prs:[GitHubPullRequest] = []
         var bots:[Bot] = []
@@ -70,7 +78,7 @@ class GitHubXBotSync {
         }
         
         botServer.fetchBots({ (fetchedBots) in
-            bots = fetchedBots.filter{$0.name.hasPrefix(GitHubPullRequest.xBotTitlePrefix())}
+            bots = fetchedBots.filter{$0.name.hasPrefix(self.xBotNamePrefix())}
             //TODO: return error?
             botFinished = true
         })
@@ -93,7 +101,7 @@ class GitHubXBotSync {
             if pr.sha == nil || pr.branch == nil || pr.title == nil {continue}
 
             var pair = BotPRPair(bot:nil, pr:pr)
-            let matchingBots = bots.filter{ $0.name == pr.xBotTitle }
+            let matchingBots = bots.filter{ $0.name == self.xBotNameForPR(pr) }
             if let matchedBot = matchingBots.first {
                 pair.bot = matchedBot
             }
@@ -151,10 +159,10 @@ class GitHubXBotSync {
 
         for botToCreate in botsToCreate {
             var finished = false
-            println("Creating bot from PR: \(botToCreate.pr?.xBotTitle)")
+            println("Creating bot from PR: \(botToCreate.pr!.title!)")
             
             var botConfig = XBot.BotConfiguration(
-                name:botToCreate.pr!.xBotTitle,
+                name:self.xBotNameForPR(botToCreate.pr!),
                 projectOrWorkspace:botConfigTemplate.projectOrWorkspace,
                 schemeName:botConfigTemplate.schemeName,
                 gitUrl:"git@github.com:\(gitHubRepo.repoName).git",
@@ -170,12 +178,12 @@ class GitHubXBotSync {
             
             botServer.createBot(botConfig){ (success, bot) in
                 let status = success ? "COMPLETED" : "FAILED"
-                println("\(bot?.name) (\(bot?.id)) creation \(status)")
+                println("\(bot!.name) (\(bot!.id)) creation \(status)")
 
                 if success {
                     bot?.integrate { (success, integration) in
                         let status = success ? integration?.currentStep ?? "NO INTEGRATION STEP" : "FAILED"
-                        println("\(bot?.name) (\(bot?.id)) integration - \(status)")
+                        println("\(bot!.name) (\(bot!.id)) integration - \(status)")
                         self.gitHubRepo.setStatus(.Pending, sha: botToCreate.pr!.sha!){ }
                     }
                 } else {

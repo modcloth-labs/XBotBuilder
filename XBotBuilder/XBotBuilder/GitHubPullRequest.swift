@@ -42,16 +42,6 @@ class GitHubPullRequest {
     var sha:String?
     var number:NSNumber?
     var title:String?
-
-    class func xBotTitlePrefix() -> (String) {
-        return "XBot"
-    }
-
-    var xBotTitle:String {
-        get {
-            return "\(GitHubPullRequest.xBotTitlePrefix()) PR#\(number!) - \(title!)"
-        }
-    }
     
     init(gitHubDictionary:Dictionary<String,AnyObject>) {
         if let head = gitHubDictionary["head"] as AnyObject? as Dictionary<String, AnyObject>? {
