@@ -32,6 +32,7 @@ class GitHubRepo {
                 if let prs = jsonOptional as AnyObject? as? [Dictionary<String, AnyObject>]{
                     for pr in prs {
                         var pullRequest = GitHubPullRequest(gitHubDictionary: pr)
+                        pullRequests.append(pullRequest)
                     }
                 }
                 completion(pullRequests)
@@ -39,10 +40,8 @@ class GitHubRepo {
 
     }
     
-    //WARN use enum for status.  Requires "pending", etc...
     func setStatus(status:CommitStatus, sha:String, completion:()->()){
         
-        //test posting status
         let params = ["state":status.rawValue]
         let postStatusURL = "/repos/\(self.repoName)/statuses/\(sha)"
         var postStatusRequest = getGitHubRequest("POST", url: postStatusURL, bodyDictionary: params)
@@ -59,16 +58,30 @@ class GitHubRepo {
         var getStatusRequest = getGitHubRequest("GET", url: getStatusURL)
         Alamofire.request(getStatusRequest)
             .responseJSON { (request, response, jsonOptional, error) in
-                
-                if let json = jsonOptional as AnyObject? as Dictionary<String, AnyObject>? {
-                    if let state:String = json["state"] as AnyObject? as String? {
-                        completion(status: CommitStatus(rawValue:state)!)
+
+                if let json = jsonOptional as AnyObject? as [Dictionary<String, AnyObject>]? {
+                    if let firstStatus = json.first?{
+                        if let state:String = firstStatus["state"] as AnyObject? as String? {
+                            completion(status: CommitStatus(rawValue:state)!)
+                        }
                     }
                 }
         }
     }
-    
-    func getGitHubRequest(method:String, url:String, bodyDictionary:AnyObject? = nil) -> NSMutableURLRequest {
+
+    func addComment(pullRequestNumber:NSNumber, text:String, completion:() -> ()) {
+        let params = ["body":text]
+        let postCommentURL = "/repos/\(self.repoName)/issues/\(pullRequestNumber)/comments"
+        var postCommentRequest = getGitHubRequest("POST", url: postCommentURL, bodyDictionary: params)
+
+        Alamofire.request(postCommentRequest)
+            .responseJSON { (request, response, jsonOptional, error) in
+                completion()
+        }
+    }
+
+    //MARK: - private
+    private func getGitHubRequest(method:String, url:String, bodyDictionary:AnyObject? = nil) -> NSMutableURLRequest {
         var request = NSMutableURLRequest(URL: NSURL(string: "\(server)\(url)")!)
         request.setValue("token \(self.token)", forHTTPHeaderField:"Authorization")
         request.HTTPMethod = method

@@ -117,7 +117,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func pollForUpdates() {
         var currentTime = NSDate()
-//        self.botSync.sync()
+        self.botSync.sync()
         self.lastPollTime = currentTime
         self.updateMenu()
     }

@@ -16,12 +16,14 @@ enum CommitStatus : String {
     
     static func fromXBotStatusText(xBotStatusText:String) -> (CommitStatus) {
         if xBotStatusText == "test-failures" {
-            return .Error
+            return .Failure
+        } else if xBotStatusText == "" {
+            return .Pending
         } else {
             println("UNKNOWN XBOT STATUS TEXT: \(xBotStatusText)")
         }
-        
-        return .Failure
+        //TODO determine all possible status texts
+        return .Error
     }
 }
 
