@@ -142,8 +142,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func viewSource() {
-//[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString: @"my url"]];
-//NSURL *url = [NSURL URLWithString:@"http://www.stackoverflow.com/"];
         let sourceUrl = NSURL(string: "https://github.com/modcloth-labs/XBotBuilder")
         NSWorkspace.sharedWorkspace().openURL(sourceUrl!)
     }
