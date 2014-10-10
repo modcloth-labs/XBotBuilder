@@ -140,6 +140,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.lastPollMenuItem.title = "Polled Github at: \(dateFormatter.stringFromDate(self.lastPollTime))"
         }
     }
+
+    func viewSource() {
+//[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString: @"my url"]];
+//NSURL *url = [NSURL URLWithString:@"http://www.stackoverflow.com/"];
+        let sourceUrl = NSURL(string: "https://github.com/modcloth-labs/XBotBuilder")
+        NSWorkspace.sharedWorkspace().openURL(sourceUrl!)
+    }
     
     func configureAndShowMenuBarItem() {
         self.lastPollMenuItem = NSMenuItem()
@@ -152,6 +159,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(self.lastPollMenuItem)
         menu.addItem(NSMenuItem.separatorItem())
         menu.addItemWithTitle("Open XBot Preferences", action: "showPreferences", keyEquivalent: "")
+        menu.addItemWithTitle("View Source", action: "viewSource", keyEquivalent: "")
         menu.addItemWithTitle("Quit XBot", action: "terminate:", keyEquivalent: "")
         self.statusItem.menu = menu
     }
