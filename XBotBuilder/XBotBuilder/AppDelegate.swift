@@ -126,6 +126,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.configureModelsFromPersistence()
     }
 
+    @IBAction func userDidClickPoll(sender: AnyObject) {
+        self.pollForUpdates()
+    }
+    
     func pollForUpdates() {
         var currentTime = NSDate()
         self.botSync.sync{ (error) in
