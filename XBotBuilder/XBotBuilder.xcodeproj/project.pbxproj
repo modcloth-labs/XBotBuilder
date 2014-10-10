@@ -17,6 +17,7 @@
 		A432F55D19E47257009E5DF3 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = A432F55C19E47257009E5DF3 /* Async.swift */; };
 		A432F55F19E48BA7009E5DF3 /* BotConfigTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A432F55E19E48BA7009E5DF3 /* BotConfigTemplate.swift */; };
 		A432F56C19E4A26B009E5DF3 /* GitHubPullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A432F56B19E4A26B009E5DF3 /* GitHubPullRequest.swift */; };
+		A432F57D19E846CA009E5DF3 /* GitHubCommitStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A432F57C19E846CA009E5DF3 /* GitHubCommitStatus.swift */; };
 		A4B74E8819DE14A300A8AA24 /* GitHubRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B74E8719DE14A300A8AA24 /* GitHubRepo.swift */; };
 		A4E60BD219DB767F0068A941 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E60BCF19DB765C0068A941 /* Alamofire.framework */; };
 		A4E60BD319DB76850068A941 /* Alamofire.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A4E60BCF19DB765C0068A941 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -93,6 +94,7 @@
 		A432F55C19E47257009E5DF3 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		A432F55E19E48BA7009E5DF3 /* BotConfigTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotConfigTemplate.swift; sourceTree = "<group>"; };
 		A432F56B19E4A26B009E5DF3 /* GitHubPullRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubPullRequest.swift; sourceTree = "<group>"; };
+		A432F57C19E846CA009E5DF3 /* GitHubCommitStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubCommitStatus.swift; sourceTree = "<group>"; };
 		A4B74DCB19DCBF9200A8AA24 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		A4B74E7E19DDCDA700A8AA24 /* XBotBuilder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XBotBuilder-Bridging-Header.h"; sourceTree = "<group>"; };
 		A4B74E8719DE14A300A8AA24 /* GitHubRepo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubRepo.swift; sourceTree = "<group>"; };
@@ -152,11 +154,10 @@
 				A40D9D5519DB56200048D70F /* MainMenu.xib */,
 				A40D9D4F19DB56200048D70F /* Supporting Files */,
 				A4B74E7E19DDCDA700A8AA24 /* XBotBuilder-Bridging-Header.h */,
-				A4B74E8719DE14A300A8AA24 /* GitHubRepo.swift */,
 				A432F55619E46B94009E5DF3 /* GitHubXBotSync.swift */,
-				A432F55C19E47257009E5DF3 /* Async.swift */,
 				A432F55E19E48BA7009E5DF3 /* BotConfigTemplate.swift */,
-				A432F56B19E4A26B009E5DF3 /* GitHubPullRequest.swift */,
+				A432F55C19E47257009E5DF3 /* Async.swift */,
+				A432F57719E84641009E5DF3 /* GitHub */,
 				C478C95E19E5DD1300AE369B /* Configuration Persistence */,
 			);
 			path = XBotBuilder;
@@ -195,6 +196,16 @@
 				A4180F7619DB5EF500403AD9 /* XBotTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A432F57719E84641009E5DF3 /* GitHub */ = {
+			isa = PBXGroup;
+			children = (
+				A432F56B19E4A26B009E5DF3 /* GitHubPullRequest.swift */,
+				A4B74E8719DE14A300A8AA24 /* GitHubRepo.swift */,
+				A432F57C19E846CA009E5DF3 /* GitHubCommitStatus.swift */,
+			);
+			name = GitHub;
 			sourceTree = "<group>";
 		};
 		A4E60BCA19DB765C0068A941 /* Products */ = {
@@ -359,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C478C96019E5DD4A00AE369B /* GithubConfig.swift in Sources */,
+				A432F57D19E846CA009E5DF3 /* GitHubCommitStatus.swift in Sources */,
 				A432F55719E46B94009E5DF3 /* GitHubXBotSync.swift in Sources */,
 				A432F56C19E4A26B009E5DF3 /* GitHubPullRequest.swift in Sources */,
 				C478C96219E5DE1D00AE369B /* ProjectConfig.swift in Sources */,

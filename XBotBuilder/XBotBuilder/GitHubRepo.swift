@@ -48,7 +48,7 @@ class GitHubRepo {
 
     }
     
-    func setStatus(status:CommitStatus, sha:String, completion:()->()){
+    func setStatus(status:GitHubCommitStatus, sha:String, completion:()->()){
         
         let params = ["state":status.rawValue]
         let postStatusURL = "/repos/\(self.repoName)/statuses/\(sha)"
@@ -61,17 +61,17 @@ class GitHubRepo {
 
     }
     
-    func getStatus(sha:String, completion:(status:CommitStatus)->()) {
+    func getStatus(sha:String, completion:(status:GitHubCommitStatus)->()) {
         let getStatusURL = "/repos/\(self.repoName)/commits/\(sha)/statuses"
         var getStatusRequest = getGitHubRequest("GET", url: getStatusURL)
         Alamofire.request(getStatusRequest)
             .responseJSON { (request, response, jsonOptional, error) in
-                var commitStatus:CommitStatus = .NoStatus
+                var commitStatus:GitHubCommitStatus = .NoStatus
 
                 if let json = jsonOptional as AnyObject? as [Dictionary<String, AnyObject>]? {
                     if let firstStatus = json.first?{
                         if let state:String = firstStatus["state"] as AnyObject? as String? {
-                            commitStatus = CommitStatus(rawValue:state)!
+                            commitStatus = GitHubCommitStatus(rawValue:state)!
                         }
                     }
                 }
