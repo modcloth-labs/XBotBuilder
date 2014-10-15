@@ -48,12 +48,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.pollForUpdates()
         var timer = NSTimer.scheduledTimerWithTimeInterval(180, target: self, selector: Selector("pollForUpdates"), userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "windowHidden:", name: NSWindowDidResignKeyNotification, object: self.window)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "windowHidden:", name: NSWindowDidResignMainNotification, object: self.window)
-    }
-    
-    func windowHidden(note: NSNotification){
-        self.window.close()
     }
     
     func configureModelsFromPersistence() {
