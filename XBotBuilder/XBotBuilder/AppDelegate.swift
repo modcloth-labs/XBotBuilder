@@ -39,7 +39,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBOutlet weak var githubAPIToken: NSTextField!
     @IBOutlet weak var githubProjectIdentifier: NSTextField!
-    
+    @IBOutlet weak var githubServer: NSTextField!
+
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
         self.configureModelsFromPersistence()
         self.updateOutletsFromConfig()
@@ -59,8 +60,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func configureModelsFromPersistence() {
         var gitHubRepo = GitHubRepo(
             token: githubConfig.apiToken,
-            repoName: githubConfig.projectIdentifier)
-        
+            repoName: githubConfig.projectIdentifier,
+            server: githubConfig.githubServer == "" ? nil : githubConfig.githubServer
+        )
+
         var botServer = XBot.Server(
             host:self.botServerConfig.host,
             user:self.botServerConfig.user,
@@ -91,6 +94,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         self.githubAPIToken.stringValue = self.githubConfig.apiToken
         self.githubProjectIdentifier.stringValue = self.githubConfig.projectIdentifier
+        self.githubServer.stringValue = self.githubConfig.githubServer
         
         self.projectNameOrWorkspace.stringValue = self.projectConfig.nameOrWorkspace
         self.projectSchemeName.stringValue = self.projectConfig.schemeName
@@ -110,6 +114,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         self.githubConfig.apiToken = self.githubAPIToken.stringValue
         self.githubConfig.projectIdentifier = self.githubProjectIdentifier.stringValue
+        self.githubConfig.githubServer = self.githubServer.stringValue
         
         self.projectConfig.nameOrWorkspace = self.projectNameOrWorkspace.stringValue
         self.projectConfig.schemeName = self.projectSchemeName.stringValue
