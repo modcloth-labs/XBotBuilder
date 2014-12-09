@@ -190,8 +190,8 @@ class GitHubXBotSync {
                 schemeName:botConfigTemplate.schemeName,
                 gitUrl:"git@\(githubUrl!.host!)\(githubPath):\(gitHubRepo.repoName).git",
                 branch:botToCreate.pr!.branch!,
-                publicKey:botConfigTemplate.publicKey,
-                privateKey:botConfigTemplate.privateKey,
+                publicKey:botConfigTemplate.publicKey.XBB_base64Encoded ?? "",
+                privateKey:botConfigTemplate.privateKey.XBB_base64Encoded ?? "",
                 deviceIds:botConfigTemplate.deviceIds
             )
             

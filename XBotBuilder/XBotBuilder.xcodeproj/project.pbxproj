@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1AC1BBA919EF285600B922DE /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC1BBA819EF285600B922DE /* String+Base64.swift */; };
 		A40D9D5219DB56200048D70F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40D9D5119DB56200048D70F /* AppDelegate.swift */; };
 		A40D9D5419DB56200048D70F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A40D9D5319DB56200048D70F /* Images.xcassets */; };
 		A40D9D5719DB56200048D70F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A40D9D5519DB56200048D70F /* MainMenu.xib */; };
@@ -81,6 +82,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1AC1BBA819EF285600B922DE /* String+Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
 		A40D9D4C19DB56200048D70F /* XBotBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XBotBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A40D9D5019DB56200048D70F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A40D9D5119DB56200048D70F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +127,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1AC1BBAE19EF285C00B922DE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1AC1BBA819EF285600B922DE /* String+Base64.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		A40D9D4319DB56200048D70F = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +159,7 @@
 		A40D9D4E19DB56200048D70F /* XBotBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				1AC1BBAE19EF285C00B922DE /* Extensions */,
 				A40D9D5119DB56200048D70F /* AppDelegate.swift */,
 				A40D9D5319DB56200048D70F /* Images.xcassets */,
 				A40D9D5519DB56200048D70F /* MainMenu.xib */,
@@ -374,6 +385,7 @@
 				A432F55719E46B94009E5DF3 /* GitHubXBotSync.swift in Sources */,
 				A432F56C19E4A26B009E5DF3 /* GitHubPullRequest.swift in Sources */,
 				C478C96219E5DE1D00AE369B /* ProjectConfig.swift in Sources */,
+				1AC1BBA919EF285600B922DE /* String+Base64.swift in Sources */,
 				C478C95919E5BC4D00AE369B /* BotServerConfig.swift in Sources */,
 				A4B74E8819DE14A300A8AA24 /* GitHubRepo.swift in Sources */,
 				A432F55F19E48BA7009E5DF3 /* BotConfigTemplate.swift in Sources */,
