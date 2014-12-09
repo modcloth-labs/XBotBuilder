@@ -170,15 +170,25 @@ class GitHubXBotSync {
         let botsToCreate = gitXBotInfos.filter{$0.bot == nil}
         var error:NSError?
 
+        var githubUrl = NSURL(string: gitHubRepo.githubServer)
+        
+        if githubUrl == nil || githubUrl!.host == nil {
+            error = NSError(domain:"GitHubXBotConfigDomain",
+                code:10002,
+                userInfo:[NSLocalizedDescriptionKey: "Invalid github URL"])
+            return error
+        }
+
         for botToCreate in botsToCreate {
             var finished = false
             println("Creating bot from PR: \(botToCreate.pr!.title!)")
+            let githubPath = githubUrl!.path? ?? ""
             
             var botConfig = XBot.BotConfiguration(
                 name:self.xBotNameForPR(botToCreate.pr!),
                 projectOrWorkspace:botConfigTemplate.projectOrWorkspace,
                 schemeName:botConfigTemplate.schemeName,
-                gitUrl:"git@github.com:\(gitHubRepo.repoName).git",
+                gitUrl:"git@\(githubUrl!.host!)\(githubPath):\(gitHubRepo.repoName).git",
                 branch:botToCreate.pr!.branch!,
                 publicKey:botConfigTemplate.publicKey,
                 privateKey:botConfigTemplate.privateKey,
