@@ -191,7 +191,11 @@ class GitHubXBotSync {
             
             botServer.createBot(botConfig){ (success, bot) in
                 let status = success ? "COMPLETED" : "FAILED"
-                println("\(bot!.name) (\(bot!.id)) creation \(status)")
+                if let createdBot = bot {
+                    println("\(bot!.name) (\(bot!.id)) creation \(status)")
+                } else {
+                    println("Bot creation \(status)")
+                }
 
                 if success {
                     bot?.integrate { (success, integration) in
