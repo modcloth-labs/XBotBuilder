@@ -12,20 +12,29 @@ import Alamofire
 class GitHubRepo {
 
     var server: String?
+    var apiServer: String?
     var token: String
     var repoName: String
     var githubServer: String {
         if server == "" {
+            return "https://github.com"
+        }
+        
+        return server ?? "https://github.com"
+    }
+    var githubApiServer: String {
+        if apiServer == "" {
             return "https://api.github.com"
         }
         
-        return server ?? "https://api.github.com"
+        return apiServer ?? "https://api.github.com"
     }
     
-    init(token: String, repoName: String, server: String?) {
+    init(token: String, repoName: String, server: String?, apiServer: String?) {
         self.token = token
         self.repoName = repoName
         self.server = server
+        self.apiServer = apiServer
     }
     
     func fetchPullRequests(completion:([GitHubPullRequest], NSError?) -> ()) {
@@ -36,7 +45,7 @@ class GitHubRepo {
                 var pullRequests:[GitHubPullRequest] = []
                 var myError = error
                 if response?.statusCode == 404 {
-                    var errorMessage = "Unable to access repo"
+                    var errorMessage = "Unable to access repo: \(request.URLString)"
 
                     myError = NSError(domain:"GitHubXBotSyncDomain",
                         code:10001,
@@ -115,7 +124,7 @@ class GitHubRepo {
 
     //MARK: - private
     private func getGitHubRequest(method:String, url:String, bodyDictionary:AnyObject? = nil) -> NSMutableURLRequest {
-        var request = NSMutableURLRequest(URL: NSURL(string: "\(githubServer)\(url)")!)
+        var request = NSMutableURLRequest(URL: NSURL(string: "\(githubApiServer)\(url)")!)
         request.setValue("token \(self.token)", forHTTPHeaderField:"Authorization")
         request.HTTPMethod = method
         
