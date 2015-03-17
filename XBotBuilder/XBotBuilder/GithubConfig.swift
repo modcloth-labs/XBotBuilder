@@ -42,6 +42,15 @@ class GithubConfig {
         }
     }
     
+    var githubApiServer: String {
+        get {
+            return fetchFromDefaults("githubApiServer")
+        }
+        set {
+            persistToDefaults("githubApiServer", value: newValue)
+        }
+    }
+    
     func namespacedKey(key:String) -> String{
         var id = 1
         return "github/\(id)/\(key)"
