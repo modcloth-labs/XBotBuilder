@@ -73,9 +73,9 @@ class GitHubRepo {
             .responseJSON { (request, response, jsonOptional, error) in
                 var commitStatus:GitHubCommitStatus = .NoStatus
 
-                if let json = jsonOptional as AnyObject? as [Dictionary<String, AnyObject>]? {
-                    if let firstStatus = json.first?{
-                        if let state:String = firstStatus["state"] as AnyObject? as String? {
+                if let json = jsonOptional as AnyObject? as! [Dictionary<String, AnyObject>]? {
+                    if let firstStatus = json.first{
+                        if let state:String = firstStatus["state"] as AnyObject? as! String? {
                             commitStatus = GitHubCommitStatus(rawValue:state)!
                         }
                     }
@@ -105,7 +105,7 @@ class GitHubRepo {
                 var comments:[String] = []
                 if let commentsJson = jsonOptional as AnyObject? as? [Dictionary<String,AnyObject>]{
                     for commentJson in commentsJson {
-                        comments.append(commentJson["body"]! as String)
+                        comments.append(commentJson["body"]! as! String)
                     }
                 }
                 completion(commentStrings: comments)

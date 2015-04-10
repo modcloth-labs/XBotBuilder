@@ -1,0 +1,6 @@
+framework module XBot {
+  umbrella header "Pods-XBot-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,6 +1,0 @@
-[submodule "XBot"]
-	path = XBot
-	url = https://github.com/modcloth-labs/XBot.git
-[submodule "Alamofire"]
-	path = Alamofire
-	url = https://github.com/modcloth-labs/Alamofire.git

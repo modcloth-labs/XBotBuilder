@@ -18,11 +18,11 @@ class GitHubPullRequest {
     var title:String?
     
     init(gitHubDictionary:Dictionary<String,AnyObject>) {
-        if let head = gitHubDictionary["head"] as AnyObject? as Dictionary<String, AnyObject>? {
-            self.branch = head["ref"] as AnyObject? as String?
-            self.sha = head["sha"] as AnyObject? as String?
+        if let head = gitHubDictionary["head"] as AnyObject? as! Dictionary<String, AnyObject>? {
+            self.branch = head["ref"] as AnyObject? as! String?
+            self.sha = head["sha"] as AnyObject? as! String?
         }
-        self.number = gitHubDictionary["number"] as AnyObject? as NSNumber?
-        self.title = gitHubDictionary["title"] as AnyObject? as String?
+        self.number = gitHubDictionary["number"] as AnyObject? as! NSNumber?
+        self.title = gitHubDictionary["title"] as AnyObject? as! String?
     }
 }

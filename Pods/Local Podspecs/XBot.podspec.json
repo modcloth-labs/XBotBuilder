@@ -1,0 +1,24 @@
+{
+  "name": "XBot",
+  "version": "0.0.1",
+  "license": "MIT",
+  "summary": "Xcode Bot Server Wrapper",
+  "homepage": "https://github.com/modcloth-labs/XBot",
+  "source": {
+    "git": "https://github.com/twg/XBot.git",
+    "tag": "0.0.1"
+  },
+  "authors": {
+    "Geoff Nix": ""
+  },
+  "platforms": {
+    "osx": "10.10"
+  },
+  "source_files": "XBot/*.swift",
+  "dependencies": {
+    "Alamofire": [
+      "~> 1.2.0"
+    ]
+  },
+  "requires_arc": true
+}

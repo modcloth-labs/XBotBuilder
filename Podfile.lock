@@ -1,1 +1,18 @@
-COCOAPODS: 0.34.1
+PODS:
+  - Alamofire (1.2.0)
+  - XBot (0.0.1):
+    - Alamofire (~> 1.2.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - XBot (from `../XBot`)
+
+EXTERNAL SOURCES:
+  XBot:
+    :path: "../XBot"
+
+SPEC CHECKSUMS:
+  Alamofire: d765c5c1713aa64106b0228aaa600a1e6851f68d
+  XBot: 6de67fb8b619b4708ce1dadbf455ead9fd7539a3
+
+COCOAPODS: 0.36.4

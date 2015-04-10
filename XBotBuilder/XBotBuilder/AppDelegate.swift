@@ -41,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var githubProjectIdentifier: NSTextField!
     @IBOutlet weak var githubServer: NSTextField!
 
-    func applicationDidFinishLaunching(aNotification: NSNotification?) {
+    func applicationDidFinishLaunching(notification: NSNotification) {
         self.configureModelsFromPersistence()
         self.updateOutletsFromConfig()
         
