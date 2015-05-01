@@ -182,7 +182,7 @@ class GitHubXBotSync {
         for botToCreate in botsToCreate {
             var finished = false
             println("Creating bot from PR: \(botToCreate.pr!.title!)")
-            let githubPath = githubUrl!.path? ?? ""
+            let githubPath = githubUrl!.path ?? ""
             
             var botConfig = XBot.BotConfiguration(
                 name:self.xBotNameForPR(botToCreate.pr!),

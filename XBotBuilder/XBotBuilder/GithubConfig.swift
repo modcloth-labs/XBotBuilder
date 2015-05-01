@@ -48,7 +48,12 @@ class GithubConfig {
     }
     
     func fetchFromDefaults(key:String) -> String! {
-        return self.defaults.objectForKey(namespacedKey(key)) as AnyObject! as NSString! ?? ""
+        if let value = self.defaults.objectForKey(namespacedKey(key)) as? String {
+            return value
+        }
+        return "";
+
+//        return self.defaults.objectForKey(namespacedKey(key)) as AnyObject! as! NSString! ?? ""
     }
     
     func persistToDefaults(key:String, value:String) {
